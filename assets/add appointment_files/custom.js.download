@@ -1,0 +1,66 @@
+/**
+ * Created by shahr on 3/14/2018.
+ */
+function checkpass() {
+    pass1 = document.getElementById("pass1");
+    pass2 = document.getElementById("pass2");
+    var error = document.getElementById('error');
+    error.innerHTML = ""
+    if (pass2.value == "") {
+
+    } else {
+        if (pass1.value != pass2.value) {
+            error = document.getElementById('error');
+            error.innerHTML = "* Password did not match";
+            $("#pass1").css("border-color", "red");
+            $("#pass2").css("border-color", "red");
+            document.getElementById("submit-form").disabled = true;
+            document.getElementById("submit-form").style.cursor = "not-allowed";
+        } else {
+            error.innerHTML = ""
+            $("#pass1").css("border-color", "#d2d6de");
+            $("#pass2").css("border-color", "#d2d6de");
+            document.getElementById("submit-form").disabled = false;
+            document.getElementById("submit-form").style.cursor = "default";
+        }
+    }
+}
+
+function check_email() {
+    var email_value = $("#email").val();
+    $.ajax({
+        'url': "/user/check_email",
+        'type': "GET",
+        'data': {"email_value": email_value},
+        'async': false,
+        success: function (data) {
+            if (data.message == true) {
+                $('#email_error').text('This Email already exist');
+                $("#email").css("border-color", "red");
+                disable_button("submit-form");
+            }
+            else {
+                $('#email_error').text('');
+                $("#email").css("border-color", "#d2d6de");
+                enable_button("submit-form")
+            }
+        }
+    });
+
+}
+
+function disable_button(id){
+    document.getElementById(id).disabled = true;
+    document.getElementById(id).style.cursor = "not-allowed";
+
+}
+
+function enable_button(id) {
+    document.getElementById(id).disabled = false;
+    document.getElementById(id).style.cursor = "default";
+}
+
+function get_host(){
+    var loc = window.location;
+    return loc.host.toString();
+}
