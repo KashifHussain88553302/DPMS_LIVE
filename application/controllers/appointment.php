@@ -89,8 +89,27 @@ class appointment extends CI_Controller
   {
     $data[] = "";
     $this->load->model('model_appointment');
+    $this->load->model('model_user');
+    $this->load->model('model_doctor');
     $Appointment_id = $this->uri->segment(3) ;
     $data['Appointment_id'] = $Appointment_id;
+    if($Appointment_id == '' || $Appointment_id == 0){
+      header('Location:'. base_url());
+    }
+
+    $Details = $this->model_appointment->GetDetail($Appointment_id);
+
+    $Patient_id = '';
+    $Doctor_id = '';
+    foreach($Details as $Detail)
+    {
+      $Patient_id = $Detail['user_id'];
+      $Doctor_id = $Detail['doctor_id'];
+    }
+    $data['Patient_Details']  = $this->model_user->GetPatientInfo($Patient_id);
+    $data['Doctor_Details']  = $this->model_doctor->GetDoctorInfo($Doctor_id);
+
+
 
     if(isset($_REQUEST['btn_save_prescription'])=="")
     {
@@ -170,6 +189,11 @@ class appointment extends CI_Controller
     $this->load->model('model_doctor');
     $Appointment_id = $this->uri->segment(3) ;
     $data['Appointment_id'] = $Appointment_id;
+
+    if($Appointment_id == '' || $Appointment_id == 0){
+      header('Location:'. base_url().'Patients/ViewAppointment');
+    }
+
     $Details = $this->model_appointment->GetDetail($Appointment_id);
 
     $Patient_id = '';
@@ -182,6 +206,12 @@ class appointment extends CI_Controller
     $data['Patient_Details']  = $this->model_user->GetPatientInfo($Patient_id);
     $data['Doctor_Details']  = $this->model_doctor->GetDoctorInfo($Doctor_id);
 
+    //if the not a vaild request than redirect to the view Appointment dashoboard
+    if($this->session->userdata('user_id') != $Patient_id &&  $this->session->userdata('user_id') != $Doctor_id)
+    {
+      header('Location:'. base_url().'Patients/ViewAppointment'); 
+    }
+    
     $data['Vitals'] = $this->model_appointment->GetAppointmentVitals($Appointment_id);
     $data['Diseases'] = $this->model_appointment->GetAppointmentDiseases($Appointment_id);
     $data['Prescriptions'] = $this->model_appointment->GetAppointmentprescription($Appointment_id);

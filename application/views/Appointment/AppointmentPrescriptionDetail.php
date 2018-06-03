@@ -422,19 +422,20 @@
                                             <!-- Add the bg color to the header using any of the bg-* classes -->
                                             <div class="info-box">
                                                 <span class="info-box-icon">
-                                                    <img class="img-circle" src="./Vitals_files/user1-128x128.jpg" alt="User Avatar">
+
+                                                    <img class="img-circle" src="<?php echo base_url().'/assets/images/avatar5.png'; ?>" alt="User Avatar">
                                                 </span>
                                                 <div class="info-box-content  bg-aqua-active">
                                                     <div class="row">
-                                                        <div class="col-sm-3 border-right">
+                                                        <div class="col-sm-5 border-right">
                                                             <div class="description-block pull-left">
                                                                 <h6 class="widget-user-username">
-                                                                    <?php echo $Patient_Detail['user_fname']; ?>
+                                                                    <?php echo $Patient_Detail['user_fname'].' '.$Patient_Detail['user_lname']; ?>
                                                                 </h6>
                                                                 <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>Appointment ID </b><?=$Appointment_id ?></p>
+                                                                    <p class="description-header pull-left"><b>Appointment ID: </b><?=$Appointment_id ?></p>
                                                                     <br>
-                                                                    <p class="description-header pull-left"><b>Email : </b><?//=$Patient_Detail['user_email']?></p>
+                                                                    <p class="description-header pull-left"><b>Email: </b><?=$Patient_Detail['user_email']?></p>
                                                                 </span>
                                                             </div>
                                                             <!-- /.description-block -->
@@ -442,38 +443,29 @@
                                                         <div class="col-sm-4 border-right">
                                                             <div class="description-block">
                                                                 <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>Phone No:</b>qsasdasd<?//=$Patient_Detail['user_ph_no']?></p>
+                                                                    <p class="description-header pull-left"><b>CNIC:</b>
+                                                                        
+                                                                            <?=$Patient_Detail['user_cnic']?>
+                                                                        
+                                                                        
+                                                                    </p>
+                                                                    <p class="description-header pull-left"><b>Phone No:</b><?=$Patient_Detail['user_ph_no']?></p>
+                                                                    <br>
                                                                     <p class="description-header pull-left"><b>City: </b>
                                                                         <?=$Patient_Detail['user_city_name']?>
                                                                             
                                                                         
                                                                         
                                                                     </p>
-                                                                    <p class="description-header pull-left"><b>Marital Status:</b>
-                                                                        
-                                                                            Single
-                                                                        
-                                                                        
-                                                                    </p>
-                                                                    <p class="description-header pull-left"><b>Age: </b>22 Year</p>
-
+                                                                    <br>
+                                                                   <!-- <p class="description-header pull-left"><b>Age: </b>22 Year</p>
+                                                                    -->
                                                                 </span>
                                                             </div>
                                                             <!-- /.description-block -->
                                                         </div>
 
-                                                        <div class="col-sm-4 border-right">
-                                                            <div class="description-block">
-                                                                <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>Appointment Type:</b>
-                                                                        
-                                                                            Regular,
-                                                                        
-                                                                    </p>
-                                                                </span>
-                                                            </div>
-                                                            <!-- /.description-block -->
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -1871,7 +1863,7 @@
                 </div>
             </div>
 
-            <div class="row">
+           <!-- <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <div><label>Gender: </label><span>
@@ -1889,7 +1881,7 @@
                         </span></div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <?php } ?>
         </div>
     </div>
@@ -2007,36 +1999,13 @@
 
               ?>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div><label>Prescription: </label><span>patient  </span></div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div>
-                            <label>Complaints:</label>
-                            <span>
 
-                                <?=$Prescription['appintment_prescription_complaint']  ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <div><label>Doctor Note: </label>
+                        <div><label>Complaint: </label>
                             <span>
                                 <?=$Prescription['appintment_prescription_doctor_notes']  ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div><label>Disease/Diagnosls: </label>
-                            <span>
-                                
+
                             </span>
                         </div>
                     </div>
@@ -2044,7 +2013,7 @@
             </div>
             <div class="row">
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="form-group">
                         <div><label>Note: </label>
                             <span>
@@ -2054,28 +2023,48 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
                     <div class="form-group">
-                        <div><label>Instructions: </label>
+                        <div><label>Diet/Instructions: </label>
                             <span>
-                                <?=$Prescription['appintment_prescription_diet_instruction_description']  ?> 
+                                <?=$Prescription['appintment_prescription_diet_instruction_description']  ?>
+
                             </span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div><label>Note: </label>
-                            <span>
-                                
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
+
            
             <?php } ?>
+            <h4 class="h3_for_summary" style="margin-bottom: 10px !important;">Diseases/Diagnosls</h4>
+            <div class="row table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-md-3 form-group" style="padding-left: 15px !important; padding-right: 100px !important;">Disease</th>
+                            <th class="col-md-3 form-group" style="padding-left: 15px !important; padding-right: 100px !important;">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                      foreach($Diseases as $Disease)
+                      {
+
+                      ?>
+                        <tr>
+                            <td class="col-md-3 form-group" style=""><?=$Disease['appointment_disease_name']?></td>
+                            <td class="col-md-3 form-group" style=""><?=$Disease['appintment_disease_note']?></td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
 
             <h4 class="h3_for_summary" style="margin-bottom: 10px !important;">Medicines</h4>
             <div class="row table-responsive">
@@ -2087,7 +2076,7 @@
                             <th class="col-md-2 text-center" style="padding-left: 50px !important;">Frequency</th>
                             <th class="col-md-1 text-center" style="padding-left: 50px !important;">Duration</th>
                             <th class="col-md-2 text-center" style="padding-left: 50px !important;">Route</th>
-                            <th class="col-md-2 text-center">Quantity</th>
+                            <th class="col-md-2 text-center" style="padding-left: 50px !important;">Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2097,27 +2086,16 @@
 
                       ?>
                         <tr>
-                            <td class="col-md-1 text-center" style=""><?=$Medicine['appointment_medicine_name']?></td>
-                            <td><?=$Medicine['appointment_medicine_dose_unit']?></td>
-                            <td><?=$Medicine['appointment_medicine_frequency']?></td>
-                            <td><?=$Medicine['appointment_medicine_duration']?></td>
-                            <td><?=$Medicine['appointment_medicine_route']?></td>
-                            <td><?=$Medicine['appointment_medicine_quantity']?></td>
+                            <td class="col-md-3 form-group" style=""><?=$Medicine['appointment_medicine_name']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_dose_unit']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_frequency']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_duration']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_route']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_quantity']?></td>
                         </tr>
                         <?php } ?>
                     </tbody>
                 </table>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div><label>Diet/Instructions: </label>
-                            <span>
-                                
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -10577,36 +10555,46 @@
     
     
     <div class="" style="border: 1px solid black">
+        
         <div class="row black_border_bottom">
+            <?php 
+
+            foreach($Doctor_Details as $Doctor_Detail)
+            {
+
+            ?>  
             <div class="row">
-                <h1 class="text-center"><u>Virtual Clinic</u></h1>
+                <h1 class="text-center"><u>DR. <?php echo $Doctor_Detail['user_fname'].' '.$Doctor_Detail['user_lname']; ?></u></h1>
             </div>
+            <?php 
+            }
+            foreach($Patient_Details as $Patient_Detail)
+            {
+
+            ?>
             <div class="row">
                 <div class="col-xs-3">
                     <div class="row">
                     <span class="text-aline">
-                        <strong>Mr. </strong>
+                        <strong><?php echo $Patient_Detail['user_fname'].' '.$Patient_Detail['user_lname'] ; ?></strong>
                         
-                        <strong>
-                            patient
-                            sb
-                        </strong>
                     </span>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="text-left">
                             <strong>Phone No.#</strong>
-                            2137-6817236
+                            <?=$Patient_Detail['user_ph_no']?>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="text-left">
-                            <strong>File No.#</strong>
-                            101101
+                            <strong>Appointment No.#</strong>
+                            <?=$Appointment_id?>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-5"></div>
+                <!--
                 <div class="col-xs-4 padding_for_orgnization">
                     <div class="row">
                         <strong>Age#</strong> 22 Year
@@ -10621,49 +10609,120 @@
                         <strong>Organization: </strong>
                         LGU
                     </div>
-                </div>
+                </div>-->
             </div>
-
+            <?php
+            } 
+            ?>
         </div>
         <div class="row  black_border_bottom">
 
-            <div class="col-xs-8 black_border_right">
+            <div class="col-xs-12 black_border_right">
                 <div class="row">
-                    <div class="row">
+                   
+                   <!--- <div class="row">
                         <h3 class="text-center"><u>Diagnosls</u></h3>
-                    </div>
+                        <table>
+                    <thead>
+                        <tr>
+                            <th class="col-md-3 form-group" style="padding-left: 15px !important; padding-right: 100px !important;">Disease</th>
+                            <th class="col-md-3 form-group" style="padding-left: 15px !important; padding-right: 100px !important;">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                      foreach($Diseases as $Disease)
+                      {
+
+                      ?>
+                        <tr>
+                            <td class="col-md-3 form-group" style=""><?=$Disease['appointment_disease_name']?></td>
+                            <td class="col-md-3 form-group" style=""><?=$Disease['appintment_disease_note']?></td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                    </div>-->
+
                     <h3 class="text-center"><u>Medicines</u></h3>
                     <div class="row text-center">
-                        
+                        <table>
+                    <thead>
+                        <tr>
+                            <th class="col-md-3 form-group" style="padding-left: 15px !important; padding-right: 100px !important;">Medicines</th>
+                            <th class="col-md-2 text-center" style="padding-left: 50px !important;">Dose/units</th>
+                            <th class="col-md-2 text-center" style="padding-left: 50px !important;">Frequency</th>
+                            <th class="col-md-1 text-center" style="padding-left: 50px !important;">Duration</th>
+                            <th class="col-md-2 text-center" style="padding-left: 50px !important;">Route</th>
+                            <th class="col-md-2 text-center" style="padding-left: 50px !important;">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                      foreach($Medicines as $Medicine)
+                      {
+
+                      ?>
+                        <tr>
+                            <td class="col-md-3 form-group" style=""><?=$Medicine['appointment_medicine_name']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_dose_unit']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_frequency']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_duration']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_route']?></td>
+                            <td class="col-md-2 text-center" style="padding-left: 50px !important;"><?=$Medicine['appointment_medicine_quantity']?></td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
                     </div>
-                </div>
-            </div>
-            <div class="col-xs-4 ">
-                <h3 class="text-center"><u>Lab Set</u></h3>
-                <div class="row">
-                    
                 </div>
             </div>
         </div>
         <div class="row black_border_bottom">
             <h3>Instructions: </h3>
-
+            <?php 
+              foreach($Prescriptions as $Prescription)
+              {
+                echo $Prescription['appintment_prescription_diet_instruction_description'];
+              } 
+              ?>
         </div>
+        <?php 
+        foreach($Doctor_Details as $Doctor_Detail)
+        {
+
+        ?>  
+        
+
         <div class="row ">
             <div class="row text-center">
-                <h5><strong>Clinic Info</strong></h5>
+                <h5><strong>Doctor Info</strong></h5>
             </div>
             <div class="row">
                 <div class="col-xs-4">
-                    <strong>Doctor Name: </strong> Doctor sb
+                    <strong>Doctor Name: </strong> <?php echo $Doctor_Detail['user_fname'].' '.$Doctor_Detail['user_lname']; ?>
                 </div>
                 <div class="col-xs-4">
-                    <strong>Clinic Location: </strong> Nishat Colony
+                    <strong>Category: </strong> <?=$Doctor_Detail['user_category_name']?>
                 </div>
                 <div class="col-xs-4">
-                    <strong>Clinic Code: </strong> CL-0002
+                    <strong>Email: </strong> <?=$Doctor_Detail['user_email']?>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <strong>City: </strong> <?=$Doctor_Detail['user_city_name']?>
+                </div>
+                <div class="col-xs-4">
+                    <strong>Location: </strong> <?=$Doctor_Detail['user_location']?>
+                </div>
+                <div class="col-xs-4">
+                    <strong>Phone No: </strong> <?=$Doctor_Detail['user_ph_no']?>
+                </div>
+            </div>
+        <?php 
+        }
+        ?>
 
 
         </div>
@@ -10685,6 +10744,13 @@
     </div>
 
 </div>
+ <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b></b>
+    </div>
+    <strong>Copyright &copy; 2018-2028 <a href="https://adminlte.io">DPMS</a>.</strong> All rights
+    reserved.
+  </footer>
 
 
 <script src="<?php echo base_url().'assets/Vitals_files/jquery.min.js.download';?>"></script>
@@ -10704,6 +10770,8 @@
 <script>
     $(document).ready(function () {
         $('.mmsg').trigger("click");
+
+    $(".sidebar-toggle").click(); 
 
     });
     $("#home_li").trigger("click");
@@ -10858,13 +10926,11 @@
                 });
 
                }
- 
 
     </script>
 
 <?php
 //$this->load->view('includes/footer'); // load the footer HTML
 ?>
-
 
 <style></style></body></html>

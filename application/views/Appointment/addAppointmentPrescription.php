@@ -410,6 +410,11 @@
                         
                         
                             <div class="patient_container">
+                            <?php 
+                              foreach($Patient_Details as $Patient_Detail)
+                              {
+
+                              ?>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <!-- Widget: user widget style 1 -->
@@ -424,11 +429,10 @@
                                                         <div class="col-sm-3 border-right">
                                                             <div class="description-block pull-left">
                                                                 <h6 class="widget-user-username">
-                                                                    PATIENT
-                                                                    SB
+                                                                    <?php echo $Patient_Detail['user_fname']; ?>
                                                                 </h6>
                                                                 <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>File No:</b>101101</p>
+                                                                    <p class="description-header pull-left"><b>AP No:</b><?=$Appointment_id ?></p>
                                                                     <br>
                                                                     <p class="description-header pull-left"><b>ORG: </b>LGU</p>
                                                                 </span>
@@ -477,6 +481,9 @@
                                         <!-- /.widget-user -->
                                     </div>
                                 </div>
+                                <?php 
+                                }
+                                ?>
                                 <ul class="nav nav-tabs nav-justified">
                                     <!--<li class=""><a href="http://localhost:9000/appointments/2/#control-biodata-tab" data-toggle="tab" aria-expanded="false">BIO DATA</a>
                                     </li>-->

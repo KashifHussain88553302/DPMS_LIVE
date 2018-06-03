@@ -10,11 +10,18 @@ class model_common extends CI_Model
 
 	public function getAllDoctors()
 	{
+		$WhereCondition = "";
+		if($this->session->userdata('user_type') == 1) // 1- Doctor
+		{ 
+			$WhereCondition .= "AND tu.user_id != '".$this->session->userdata('user_id')."'";
+		}
 		$query  = $this->db->query(" 	
 										SELECT *
 										FROM `tbl_users` tu 
 										WHERE 1= 1 
 										AND tu.user_type = 1
+										AND tu.user_is_active = 1
+										$WhereCondition
 										ORDER BY user_fname , user_lname
 									");
 		

@@ -71,7 +71,7 @@ $this->load->view('includes/header.php'); // load the header HTML
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Doctor</a></li>
-        <li class="active"></li>
+        <li class="active">View Doctor</li>
       </ol>
     </section>
 
@@ -95,9 +95,9 @@ $this->load->view('includes/header.php'); // load the header HTML
                                     <input type="text" disabled="" class="form-control" name="first_name" pattern="[A-Za-z0-9]*" title="only alpha numeric characters allowed" placeholder="First Name" value="<?php echo $this->session->userdata('user_name');?>" id="first_name" required="">
                                 </div>
                                 <div class="col-md-5 form-group has-feedback">
-                                    Select Date
+                                    City
                                     <!-- Start time range picker -->
-                                    <input type="text" disabled="" class="form-control" name="first_name" pattern="[A-Za-z0-9]*" title="only alpha numeric characters allowed" placeholder="First Name" id="first_name" required="">
+                                    <input type="text" value="<?=$user_city_name?>" disabled="" class="form-control" name="first_name" pattern="[A-Za-z0-9]*" title="only alpha numeric characters allowed" placeholder="First Name" id="first_name" required="">
                   <!-- END Time picker-->
                                     <!--<input type="text" class="form-control" name="last_name" pattern="[A-Za-z0-9]*" id="last_name" title="only alpha numeric characters allowed" placeholder="Last Name">
                                 --></div>

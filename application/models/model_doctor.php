@@ -21,12 +21,18 @@ class model_doctor extends CI_Model {
 		$sel_doctor_category     = $this->input->post('sel_doctor_category');
 		$sel_doctor_city         = $this->input->post('sel_doctor_city');
 
+		if($this->session->userdata('user_type') == 1) // 1- Doctor
+		{ 
+			$WhereCondition .= "AND user_id != '".$this->session->userdata('user_id')."'";
+		}
+
 		if(isset($_POST['btn_search'] ))
 		{
 			/*if($txt_name != '')
 			{
 				$WhereCondition .= "AND user_fname like '%$txt_name%'";
 			}*/
+
 
 			if($sel_doctor != '' && $sel_doctor != 0)
 			{
@@ -53,8 +59,7 @@ class model_doctor extends CI_Model {
 			
 		}	
 
-		//$txt_user_name              = $this->input->post('txt_user_name');
-	  
+	
 	  	$query  = $this->db->query(" 	
 										SELECT *,
 										(
@@ -77,6 +82,7 @@ class model_doctor extends CI_Model {
 										FROM `tbl_users` tu 
 										WHERE 1= 1 
 										AND tu.user_type = 1
+										AND tu.user_is_active = 1
 										$WhereCondition
 										ORDER BY user_fname , user_lname
 									");

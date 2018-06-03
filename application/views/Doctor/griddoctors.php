@@ -36,7 +36,7 @@ $this->load->view('includes/header.php'); // load the header HTML
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Doctor</a></li>
-        <li class="active">view</li>
+        <li class="active">View</li>
       </ol>
     </section>
 
