@@ -58,8 +58,15 @@ $this->load->view('includes/header.php'); // load the header HTML
 	?>
 
 	<?php
-	$this->load->view('includes/sidebar'); // load the  sidebar HTML
-	?>
+  if($this->session->userdata('admin_id') != '')
+  {
+    $this->load->view('includes/adminsidebar'); // load the  sidebar HTML
+  }
+  else
+  {
+	 $this->load->view('includes/sidebar'); // load the  sidebar HTML
+	}
+  ?>
 
 	 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
