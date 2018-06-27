@@ -5,7 +5,7 @@ class doctor extends CI_Controller {
   public function __construct() {
     parent::__construct();
     
-     if($this->session->userdata('user_id') == '' || $this->session->userdata('user_id') == 0){
+     if(($this->session->userdata('user_id') == '' || $this->session->userdata('user_id') == 0) && $this->session->userdata('admin_id') == ''){
       header('Location:'. base_url());
     }
    }
@@ -21,7 +21,14 @@ class doctor extends CI_Controller {
     $data[] = "";
     $this->load->model('model_doctor');
     $this->load->model('model_common');
-   
+    
+    /**
+
+    **/
+    if(!isset($_POST['btn_search'] ))
+    {
+      $_POST['sel_isactive'] = 1;
+    }
 
     $data['doctors'] = $this->model_doctor->GetListDoctors();
 

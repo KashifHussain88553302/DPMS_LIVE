@@ -6,10 +6,9 @@ class appointment extends CI_Controller
   public function __construct() {
     parent::__construct();
 
-    if($this->session->userdata('user_id') == '' || $this->session->userdata('user_id') == 0){
+    if(($this->session->userdata('user_id') == '' || $this->session->userdata('user_id') == 0) && $this->session->userdata('admin_id') == ''){
       header('Location:'. base_url());
     }
-    
    }
 
   public function index()
@@ -207,7 +206,7 @@ class appointment extends CI_Controller
     $data['Doctor_Details']  = $this->model_doctor->GetDoctorInfo($Doctor_id);
 
     //if the not a vaild request than redirect to the view Appointment dashoboard
-    if($this->session->userdata('user_id') != $Patient_id &&  $this->session->userdata('user_id') != $Doctor_id)
+    if($this->session->userdata('user_id') != $Patient_id &&  $this->session->userdata('user_id') != $Doctor_id && $this->session->userdata('admin_id') == '' )
     {
       header('Location:'. base_url().'Patients/ViewAppointment'); 
     }

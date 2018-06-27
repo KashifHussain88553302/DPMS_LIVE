@@ -168,6 +168,40 @@ class model_common extends CI_Model
 		
 	}
 
+	public function getcommonadminCounts()
+	{
+		$currentdate = date('Y-m-d');
+		$query  = $this->db->query(" 	
+										SELECT 
+
+										(
+										    SELECT count(*)
+										    from tbl_user_doctor_appointment
+										    WHERE appointment_status_id = 13
+										) As requested_appointments,
+										(
+										    SELECT count(*)
+										    from tbl_user_doctor_appointment
+										    WHERE appointment_status_id = 14
+										) As approved_appointments,
+										(
+										    SELECT count(*)
+										    from tbl_user_doctor_appointment
+										    WHERE appointment_status_id = 16
+										) As finished_appointments,
+										(
+										    SELECT count(*)
+										    from tbl_user_doctor_appointment
+										    WHERE appointment_status_id = 14
+										    AND appointment_date = '$currentdate'
+										) As Today_appointments
+									");
+		
+		$result = $query->result_array();			
+		return $result;
+
+	}
+
 
 
 }

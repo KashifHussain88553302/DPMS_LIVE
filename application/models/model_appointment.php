@@ -327,7 +327,6 @@ class model_appointment extends CI_Model
 									'$user_id'
 									)	
 								");
-		
 		}
 	}
 
@@ -367,10 +366,8 @@ class model_appointment extends CI_Model
 
 	public function AddAppointmentMedicines($Appointment_id ,$medicine_1 , $dose_1 ,$frequency_1 , $duration_1 ,$root_1 , $qty_1 )
 	{
-			$user_id = $this->session->userdata('user_id');
-
+		$user_id = $this->session->userdata('user_id');
 		$timedate = date('Y-m-d H:i:s');
-
 		$query = $this->db->query("
 									INSERT iNTO tbl_appointment_medicines
 									(
@@ -403,8 +400,7 @@ class model_appointment extends CI_Model
 	{
 		$complaints  = $this->input->post('complaints');
       	$doctor_notes  = $this->input->post('doctor_notes');
-
-      		$user_id = $this->session->userdata('user_id');
+      	$user_id = $this->session->userdata('user_id');
 
 		$timedate = date('Y-m-d H:i:s');
 
@@ -492,7 +488,6 @@ class model_appointment extends CI_Model
 		return $result;
 	}
 
-
 	public function getDoctorDayPlanDetailInfo($Doctor_id , $datepicker)
 	{
 		$Formateddatepicker  = date('Y-m-d', strtotime($datepicker));
@@ -520,23 +515,19 @@ class model_appointment extends CI_Model
 		return $result;
 	}
 
-
 	public function validateAppointmentsTiming($isGetCount=0)
 	{	
 		$WhereCondition = "";
 
-		
 		$Doctor_id         		= $this->input->post('Doctor_id');
 		$AppointmentDate         = $this->input->post('AppointmentDate');
 	    $AppointmentTime         = $this->input->post('AppointmentTime');
 	    $AppointmentDescription  = $this->input->post('AppointmentDescription');
 
-
 		$dayofweek = date('w', strtotime($AppointmentDate));
 
 		$Formated_AppointmentTime = date('H:i:s', strtotime($AppointmentTime));
 		
-	
 		$query  = $this->db->query(" 	
 										SELECT 
 										count(*) As count
@@ -553,7 +544,78 @@ class model_appointment extends CI_Model
 		return $result;
 	}
 
+	public function GetAllAppointments()
+	{	
+		$WhereCondition = "";
+		$user_id = $this->session->userdata('user_id');
 
-	
+		$sel_status     = $this->input->post('sel_status');
+		$sel_patient     = $this->input->post('sel_patient');
+
+		$sel_doctor     = $this->input->post('sel_doctor');
+
+		$appointment_date_from     = $this->input->post('appointment_date_from');
+		$appointment_date_to     = $this->input->post('appointment_date_to');
+
+		$appointment_Time_start     = $this->input->post('appointment_Time_start');
+		$appointment_Time_to     = $this->input->post('appointment_Time_to');
+
+		if($sel_status != '' && $sel_status != 0)
+		{
+			$WhereCondition .= "AND UDA.appointment_status_id = '$sel_status'";
+		} 
+
+		if($sel_patient != '' && $sel_patient != 0)
+		{
+			$WhereCondition .= "AND UDA.user_id = '$sel_patient'";
+		} 
+
+		if($sel_doctor != '' && $sel_doctor != 0)
+		{
+			$WhereCondition .= "AND UDA.doctor_id = '$sel_doctor'";
+		}
+
+		if(($appointment_date_from != "" && $appointment_date_to !="" && $appointment_date_from <= $appointment_date_to) )
+		{	
+			$Formated_appointment_date_from = date('Y-m-d', strtotime($appointment_date_from));
+			$Formated_appointment_date_to = date('Y-m-d', strtotime($appointment_date_to));
+
+			$WhereCondition .= "AND UDA.appointment_date BETWEEN '$Formated_appointment_date_from' AND '$Formated_appointment_date_to' ";
+		}
+
+		if(($appointment_Time_start != "" && $appointment_Time_to !="" && $appointment_Time_start < $appointment_Time_to) )
+		{	
+			$Formated_appointment_Time_start = date('h:i:s', strtotime($appointment_Time_start));
+			$Formated_appointment_Time_to = date('h:i:s', strtotime($appointment_Time_to));
+
+			$WhereCondition .= "AND UDA.appointment_time BETWEEN '$Formated_appointment_Time_start' AND '$Formated_appointment_Time_to' ";
+		}
+
+		$query  = $this->db->query(" 	
+										SELECT * ,
+										(
+											SELECT CONCAT(tu.user_fname, ' ', tu.user_lname)
+											FROM tbl_users tu
+											WHERE tu.user_id = UDA.doctor_id
+										) As Appointment_doctor_name,
+										(
+											SELECT CONCAT(tu.user_fname, ' ', tu.user_lname)
+											FROM tbl_users tu
+											WHERE tu.user_id = UDA.user_id
+										) As Appointment_patient_name,
+										(
+											SELECT tcfv.Custom_Field_value_name
+											FROM tbl_custom_field_values tcfv
+											WHERE tcfv.Custom_Field_Value_ID = UDA.appointment_status_id
+										) AS appointment_status_name
+										FROM 
+										tbl_user_doctor_appointment  UDA
+										WHERE 1 = 1
+										$WhereCondition
+									");
+		
+		$result = $query->result_array();			
+		return $result;
+	}
 
 }
