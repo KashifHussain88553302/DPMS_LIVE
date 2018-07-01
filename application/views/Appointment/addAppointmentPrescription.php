@@ -422,19 +422,20 @@
                                             <!-- Add the bg color to the header using any of the bg-* classes -->
                                             <div class="info-box">
                                                 <span class="info-box-icon">
-                                                    <img class="img-circle" src="./Vitals_files/user1-128x128.jpg" alt="User Avatar">
+
+                                                    <img class="img-circle" src="<?php echo base_url().'/assets/images/avatar5.png'; ?>" alt="User Avatar">
                                                 </span>
                                                 <div class="info-box-content  bg-aqua-active">
                                                     <div class="row">
-                                                        <div class="col-sm-3 border-right">
+                                                        <div class="col-sm-5 border-right">
                                                             <div class="description-block pull-left">
                                                                 <h6 class="widget-user-username">
-                                                                    <?php echo $Patient_Detail['user_fname']; ?>
+                                                                    <?php echo $Patient_Detail['user_fname'].' '.$Patient_Detail['user_lname']; ?>
                                                                 </h6>
                                                                 <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>AP No:</b><?=$Appointment_id ?></p>
+                                                                    <p class="description-header pull-left"><b>Appointment ID: </b><?=$Appointment_id ?></p>
                                                                     <br>
-                                                                    <p class="description-header pull-left"><b>ORG: </b>LGU</p>
+                                                                    <p class="description-header pull-left"><b>Email: </b><?=$Patient_Detail['user_email']?></p>
                                                                 </span>
                                                             </div>
                                                             <!-- /.description-block -->
@@ -442,38 +443,29 @@
                                                         <div class="col-sm-4 border-right">
                                                             <div class="description-block">
                                                                 <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>Phone No:</b>2137-6817236</p>
-                                                                    <p class="description-header pull-left"><b>Gender: </b>
+                                                                    <p class="description-header pull-left"><b>CNIC:</b>
                                                                         
-                                                                            Male
-                                                                        
-                                                                        
-                                                                    </p>
-                                                                    <p class="description-header pull-left"><b>Marital Status:</b>
-                                                                        
-                                                                            Single
+                                                                            <?=$Patient_Detail['user_cnic']?>
                                                                         
                                                                         
                                                                     </p>
-                                                                    <p class="description-header pull-left"><b>Age: </b>22 Year</p>
-
+                                                                    <p class="description-header pull-left"><b>Phone No:</b><?=$Patient_Detail['user_ph_no']?></p>
+                                                                    <br>
+                                                                    <p class="description-header pull-left"><b>City: </b>
+                                                                        <?=$Patient_Detail['user_city_name']?>
+                                                                            
+                                                                        
+                                                                        
+                                                                    </p>
+                                                                    <br>
+                                                                   <!-- <p class="description-header pull-left"><b>Age: </b>22 Year</p>
+                                                                    -->
                                                                 </span>
                                                             </div>
                                                             <!-- /.description-block -->
                                                         </div>
 
-                                                        <div class="col-sm-4 border-right">
-                                                            <div class="description-block">
-                                                                <span class="description-text">
-                                                                    <p class="description-header pull-left"><b>Appointment Type:</b>
-                                                                        
-                                                                            Regular,
-                                                                        
-                                                                    </p>
-                                                                </span>
-                                                            </div>
-                                                            <!-- /.description-block -->
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -489,7 +481,7 @@
                                     </li>-->
                                     <li class="active"><a href="http://localhost:9000/appointments/2/#control-vitals-tab" data-toggle="tab" aria-expanded="true">Vitals</a>
                                     </li>
-                                    <li><a href="http://localhost:9000/appointments/2/#control-prescription-tab" data-toggle="tab">Prescription</a></li>
+                                    <li><a href="http://localhost:9000/appointments/2/#control-prescription-tab" id="Prescription_link" data-toggle="tab">Prescription</a></li>
                                    <!-- <li><a href="http://localhost:9000/appointments/2/#control-summary-tab" data-toggle="tab">Summary</a></li>
                                                                         <li><a href="http://localhost:9000/appointments/2/#control-print-tab" data-toggle="tab">print</a></li>
                                 --></ul>
@@ -528,6 +520,48 @@
         }
     </style>
 
+<?php
+$temp_value = "";
+$temp_point = "";
+$pulse = "";
+$height = "";
+$weight = "";
+$bmi = "";
+
+$left_eye_upper = "";
+$left_eye_lower = "";
+$right_eye_upper = "";
+$right_eye_lower = "";
+
+$color_vision = "";
+$bp_standing_upper = "";
+$bp_standing_lower = "";
+$blood_sugar_value = "";
+$vital_notes = "";
+
+
+foreach($Vitals as $Vital)
+{
+        $temp_value = $Vital['temperature_value'];
+        $temp_point = $Vital['temperature_point'];
+        $pulse = $Vital['pulse'];
+        $height = $Vital['height'];
+        $weight = $Vital['Weight'];
+        $bmi = $Vital['bmi'];
+        
+        $left_eye_upper = $Vital['left_eye_up'];
+        $left_eye_lower = $Vital['left_eye_lower'];
+        $right_eye_upper = $Vital['right_eye_up'];
+        $right_eye_lower = $Vital['right_eye_lower'];
+
+        $color_vision = $Vital['color_vision'];
+        $bp_standing_upper = $Vital['blood_pressure_upper'];
+        $bp_standing_lower = $Vital['blood_pressure_lower'];
+        $blood_sugar_value = $Vital['blood_sugar'];
+        $vital_notes =  $Vital['vital_notes'];
+}
+
+?>
 <div class="">
     <div class="row ">
         <div class="col-md-12" style="margin-top: 10px">
@@ -546,7 +580,7 @@
                                 <div class="form-group">
                                     <label for="temp_value">Temprature Value</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" id="temp_value" name="temp_value" placeholder="Temp in Fahrenheit" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" id="temp_value">
+                                        <input class="form-control" type="text" id="temp_value" name="temp_value" placeholder="Temp in Fahrenheit" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" id="temp_value" value="<?=$temp_value?> ">
                                         <span class="input-group-addon">F</span>
                                     </div>
                                 </div>
@@ -554,10 +588,10 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="temp_point">Temperature Point</label>
-                                    <select class="form-control " id="temp_point" name="temp_point">
-                                        <option value="axillary">Axillary</option>
-                                        <option value="oral">Oral</option>
-                                        <option value="rectal">Rectal</option>
+                                    <select class="form-control " id="temp_point" name="temp_point" >
+                                        <option <?php if($temp_point == "axillary"){ echo "selected";}?> value="axillary">Axillary</option>
+                                        <option <?php if($temp_point == "oral"){ echo "selected";}?> value="oral">Oral</option>
+                                        <option <?php if($temp_point == "rectal"){ echo "selected";}?> value="rectal">Rectal</option>
 
                                     </select>
                                 </div>
@@ -566,7 +600,7 @@
                                 <div class="form-group">
                                     <label for="pulse">Pulse</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="pulse" placeholder="Duration in minutes" id="pulse" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only">
+                                        <input class="form-control" type="text" name="pulse" placeholder="Duration in minutes" id="pulse" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only"  value="<?=$pulse?>">
                                         <span class="input-group-addon">Mins</span>
                                     </div>
                                 </div>
@@ -579,7 +613,7 @@
                                 <div class="form-group">
                                     <label for="height">Height</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="height" placeholder="Height In Centimeters" id="height" pattern="[+-]?([0-9]*[.])?[0-9]+" oninput="calculate_bmi()" title="Enter Integer/Float Number Only">
+                                        <input class="form-control" type="text" name="height" placeholder="Height In Centimeters" id="height" pattern="[+-]?([0-9]*[.])?[0-9]+" oninput="calculate_bmi()" title="Enter Integer/Float Number Only" value="<?=$height?> ">
                                         <span class="input-group-addon">cm</span>
                                     </div>
                                 </div>
@@ -588,7 +622,7 @@
                                 <div class="form-group">
                                     <label for="weight">Weight</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="weight" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" oninput="calculate_bmi()" placeholder="Weight in Kgs" id="weight">
+                                        <input class="form-control" type="text" name="weight" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" oninput="calculate_bmi()" placeholder="Weight in Kgs" id="weight" value="<?=$weight?> ">
                                         <span class="input-group-addon">Kgs</span>
                                     </div>
                                 </div>
@@ -596,7 +630,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="bmi">BMI</label>
-                                    <input class="form-control" type="text" name="bmi" placeholder="BMI Value" id="bmi" disabled="">
+                                    <input class="form-control" type="text" name="bmi" placeholder="BMI Value" id="bmi" disabled="" value="<?=$bmi?> ">
                                 </div>
                             </div>
                         </div>
@@ -607,9 +641,9 @@
                                 <div class="form-group">
                                     <label for="left_eye_upper">Left Eye</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="left_eye_upper" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Value" id="left_eye_upper">
+                                        <input class="form-control" type="text" name="left_eye_upper" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Value" id="left_eye_upper" value="<?=$left_eye_upper?> ">
                                         <span class="input-group-addon">/</span>
-                                        <input class="form-control" type="text" name="left_eye_lower" placeholder="Value" id="left_eye_lower" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only">
+                                        <input class="form-control" type="text" name="left_eye_lower" placeholder="Value" id="left_eye_lower" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" value="<?=$left_eye_lower?> ">
                                     </div>
                                 </div>
                             </div>
@@ -617,9 +651,9 @@
                                 <div class="form-group">
                                     <label for="right_eye_upper">Right Eye</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="right_eye_upper" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Value" id="right_eye_upper">
+                                        <input class="form-control" type="text" name="right_eye_upper" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Value" id="right_eye_upper" value="<?=$right_eye_upper?> ">
                                         <span class="input-group-addon">/</span>
-                                        <input class="form-control" type="text" name="right_eye_lower" placeholder="Value" id="right_eye_lower" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only">
+                                        <input class="form-control" type="text" name="right_eye_lower" placeholder="Value" id="right_eye_lower" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" value="<?=$right_eye_lower?> ">
                                     </div>
                                 </div>
                             </div>
@@ -628,25 +662,23 @@
                                     <label for="barcode">Color Vision</label>
                                     <select name="color_vision" id="color_vision" class="form-control">
                                       <!--  <option value="" disabled="" selected="">-- Selectet An Option --</option>
-                                        --><option value="1">Yes</option>
-                                        <option value="0" selected="" >No</option>
+                                        --><option <?php if($color_vision == 1){ echo "selected";}?> value="1">Yes</option>
+                                        <option <?php if($color_vision == 0){ echo "selected";}?> value="0" selected="" >No</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Blood Pressure(Standing), Blood Pressure(Sitting), Blood Pressure(laying) -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="well well-sm">
+                        
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="bp_standing_upper">Blood Pressure </label>
                                                 <div class="input-group">
-                                                    <input class="form-control" type="number" min="0" name="bp_standing_upper" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Systolic" id="bp_standing_upper">
+                                                    <input class="form-control" type="number" min="0" name="bp_standing_upper" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Systolic" id="bp_standing_upper" value="<?=$bp_standing_upper?> ">
                                                     <span class="input-group-addon">/</span>
-                                                    <input class="form-control" type="number" min="0" name="bp_standing_lower" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Diastolic" id="bp_standing_lower">
+                                                    <input class="form-control" type="number" min="0" name="bp_standing_lower" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" placeholder="Diastolic" id="bp_standing_lower" value="<?=$bp_standing_lower?> ">
                                                     <div class="input-group-btn">
                                                         <select name="bp_standing_unit" id="bp_standing_unit" class="form-control" style="width:90px;">
                                                             <option value="mmhg">mmHg</option>
@@ -655,6 +687,13 @@
                                                         </select>
                                                     </div><!-- /btn-group -->
                                                 </div><!-- /input-group -->
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                        <label for="bp_standing_upper">Blood Sugar </label>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Value" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" id="blood_sugar_value" name="blood_sugar_value" value="<?=$blood_sugar_value?> ">
 
                                             </div>
                                         </div>
@@ -696,12 +735,10 @@
                                         </div>-->
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
+                              
 
                         <!-- Blood Sugar  -->
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col-md-12">
                                 <div class="well well-sm">
                                     <div class="row">
@@ -719,9 +756,9 @@
 
                                             </div>
                                         </div>-->
-                                        <div class="col-md-4">
+                                       <!--- <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" placeholder="Value" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" id="blood_sugar_value" name="blood_sugar_value">
+                                                <input type="text" placeholder="Value" pattern="[+-]?([0-9]*[.])?[0-9]+" title="Enter Integer/Float Number Only" id="blood_sugar_value" name="blood_sugar_value" value="<?=$blood_sugar_value?> ">
 
                                             </div>
                                         </div>
@@ -729,7 +766,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div>--->
 
                         <input type="text" value="<?=$Appointment_id?>" id="hdn_appointment" name="hdn_appointment" hidden="">
                         
@@ -737,8 +774,9 @@
                         <!-- Notes  -->
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="well">
-                                    Notes: <textarea name="note" id="note" class="form-control" draggable="false" cols="30" placeholder="Enter Your Note" rows="5"></textarea>
+                                <div class="">
+                                <label for="bp_standing_upper">Notes:</label>
+                                     <textarea name="vital_notes" id="vital_notes" class="form-control" draggable="false" cols="30" placeholder="Enter Your Note" rows="5" ><?=$vital_notes ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -792,7 +830,7 @@
         </div>
     </div>
     
-        <h2 style="text-align:center">History</h2>
+       <!--- <h2 style="text-align:center">History</h2>
         <div class="profile_box">
 
 
@@ -801,7 +839,7 @@
                 <h3 class="box-title">Data Table With Full Features</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive">
+           <!--- <div class="box-body table-responsive">
                 <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="row"><div class="col-sm-6"><div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-6"><div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div></div></div><div class="row"><div class="col-sm-12"><table id="example1" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="example1_info" style="width: 0px;">
                     <thead id="print_vital_row">
                     <tr role="row"><th rowspan="2" class="text-center sorting_asc" tabindex="0" aria-controls="example1" colspan="1" aria-sort="ascending" aria-label="Sr.No: activate to sort column descending" style="width: 0px;">Sr.No</th><th rowspan="2" class="text-center sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th><th colspan="3" class="text-center" rowspan="1">Bps</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="Pulse: activate to sort column ascending" style="width: 0px;">Pulse</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="height: activate to sort column ascending" style="width: 0px;">height</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="Weight: activate to sort column ascending" style="width: 0px;">Weight</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="BMI: activate to sort column ascending" style="width: 0px;">BMI</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="Notes: activate to sort column ascending" style="width: 0px;">Notes</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="Blood Sugar: activate to sort column ascending" style="width: 0px;">Blood Sugar</th><th rowspan="2" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label="Fitness Report: activate to sort column ascending" style="width: 0px;">Fitness Report</th><th rowspan="2" style="padding-right: 60px !important; width: 0px;" class="sorting" tabindex="0" aria-controls="example1" colspan="1" aria-label=" Actions : activate to sort column ascending"> Actions </th></tr>
@@ -858,11 +896,11 @@
                 </table></div></div><div class="row"><div class="col-sm-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="example1_previous"><a href="http://localhost:9000/appointments/2/#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button active"><a href="http://localhost:9000/appointments/2/#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button next disabled" id="example1_next"><a href="http://localhost:9000/appointments/2/#" aria-controls="example1" data-dt-idx="2" tabindex="0">Next</a></li></ul></div></div></div></div>
             </div>
             <!-- /.box-body -->
-        </div>
+       <!-- </div>-->
         <!-- /.box -->
     
 
-    </div>
+   <!--- </div>-->
 </div>
 
     <script src="./Vitals_files/jquery.dataTables.min.js.download"></script>
@@ -1060,6 +1098,19 @@
         }
     </style>
 
+<?php
+ $complaints = "";
+ $doctor_notes = "";
+ $txt_diet_instruction = "";
+
+foreach($Prescriptions as $Prescription)
+{
+   $complaints = $Prescription['appintment_prescription_complaint'];
+   $doctor_notes = $Prescription['appintment_prescription_doctor_notes'];
+   $txt_diet_instruction = $Prescription['appintment_prescription_diet_instruction_description'] ;
+}
+?>
+
 <form method="post" action="">
      <div class="font_for_prescription">
 
@@ -1078,12 +1129,12 @@
         </div>-->
         <div class="row">
             <div class="col-md-12 ">
-                <div class="well well_margin_bottom well_padding">
+                <div class="">
                     <div class="col-md-1" style="margin-top: 6px">
                         <span>Complaint:</span>
                     </div>
                     <div class="col-md-10">
-                        <input type="text" list="complaints_list" name="complaints" id="complaints" class="form-control select2" multiple="multiple" onkeyup="searchOpen(this)">
+                        <input type="text" list="complaints_list" name="complaints" id="complaints" class="form-control select2" multiple="multiple" onkeyup="searchOpen(this)" value="<?=$complaints?>">
                         <datalist id="complaints_list">
 
                         </datalist>
@@ -1105,7 +1156,7 @@
                 </div>
             </div>
         </div>
-        <div class="row ">
+        <!--<div class="row ">
             <div class="col-md-12" style="margin-top: 10px">
                 <div class="well well_margin_bottom well_padding">
                     <label><h5>Current Vitals: </h5></label>
@@ -1117,10 +1168,10 @@
                     <label> BSL: </label><span> 0.0</span>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="row">
             <div class="col-md-12 ">
-                <div class="well well_margin_bottom well_padding">
+                <div class="">
                     <div class="col-md-5 ">
                         <h4>Doctor Notes: </h4>
                     </div>
@@ -1130,7 +1181,7 @@
                         <a type="button" class="form_button" id=""> <i class="fa fa-star"> Apply Templates</i></a>
                         <a type="button" class="form_button" id=""> <i class="fa fa-star"> Templates History</i></a>
                     --></div>
-                    <textarea name="doctor_notes" id="doctor_notes" class="form-control" draggable="false" cols="30" placeholder="Enter Your Note" rows="3"></textarea>
+                    <textarea name="doctor_notes" id="doctor_notes" class="form-control" draggable="false" cols="30" placeholder="Enter Your Note" rows="3"><?=$doctor_notes?></textarea>
                 </div>
             </div>
         </div>
@@ -1284,7 +1335,7 @@
         <div class="col-md-12 ">
                 <div class="well well_margin_bottom well_padding">
                     <div class="col-md-5 ">
-                        <h4>Diet/Instructions:: </h4>
+                        <h4>Diet/Instructions: </h4>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-6" style="margin-top: 25px !important;">
@@ -1292,7 +1343,7 @@
                         <a type="button" class="form_button" id=""> <i class="fa fa-star"> Apply Templates</i></a>
                         <a type="button" class="form_button" id=""> <i class="fa fa-star"> Templates History</i></a>
                     --></div>
-                    <textarea name="txt_diet_instruction" id="txt_diet_instruction" class="form-control" draggable="false" cols="30" placeholder="Enter Your Note" rows="3"></textarea>
+                    <textarea name="txt_diet_instruction" id="txt_diet_instruction" class="form-control" draggable="false" cols="30" placeholder="Enter Your Note" rows="3"><?=$txt_diet_instruction?></textarea>
                 </div>
             </div>
 
@@ -1321,7 +1372,7 @@
             <div class=" well_margin_bottom well_padding ">
                 <div class="col-sm-4 "></div>
                 <div class="col-sm-1 col-xs-2">
-                    <button type="submit" name="btn_save_prescription" class="btn btn-sm btn-success">Save</button>
+                    <button type="submit" name="btn_save_prescription" class="btn btn-sm btn-success">Save and Finish Appointment</button>
                 </div>
                 <!--<div class="col-sm-2 col-xs-5">
                     <button type="submit" class="btn btn-sm btn-success btn-block ">Save &amp; Print</button>
@@ -1504,10 +1555,10 @@
                 cols += '<td><input type="text" list="medicine_list" name="medicine_'+TemphdnMdcrow+'" id="medicine_'+TemphdnMdcrow+'"\n' +
                     'class="form-control" onkeyup="searchOpen(this)" + counter +></input><datalist id="medicine_list"></datalist></td>';
                 cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="text" class="form-control " name="dose_'+TemphdnMdcrow+'"/></td>';
-                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="number" class="form-control " name="frequency'+TemphdnMdcrow+'"/></td>';
-                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="number" class="form-control " name="duration'+TemphdnMdcrow+'"/></td>';
-                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="text" class="form-control " name="root'+TemphdnMdcrow+'"/></td>';
-                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="number" class="form-control " name="qty'+TemphdnMdcrow+'"/></td>';
+                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="number" class="form-control " name="frequency_'+TemphdnMdcrow+'"/></td>';
+                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="number" class="form-control " name="duration_'+TemphdnMdcrow+'"/></td>';
+                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="text" class="form-control " name="root_'+TemphdnMdcrow+'"/></td>';
+                cols += '<td style="padding-left:0px !important; padding-right:0px !important;"><input type="number" class="form-control " name="qty_'+TemphdnMdcrow+'"/></td>';
                 cols += '<td style="padding-right:0px !important;"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
                 newRow.append(cols);
                 $("#myTable4").append(newRow);
@@ -10184,6 +10235,14 @@
     </div>
 
 </div>
+ <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b></b>
+    </div>
+    <strong>Copyright &copy; 2018-2028 <a href="https://adminlte.io">DPMS</a>.</strong> All rights
+    reserved.
+  </footer>
+
 
 
 <script src="<?php echo base_url().'assets/Vitals_files/jquery.min.js.download';?>"></script>
@@ -10203,6 +10262,7 @@
 <script>
     $(document).ready(function () {
         $('.mmsg').trigger("click");
+$(".sidebar-toggle").click(); 
 
     });
     $("#home_li").trigger("click");
@@ -10325,10 +10385,11 @@
                 var bp_standing_upper = $("#bp_standing_upper").val();
                 var bp_standing_lower = $("#bp_standing_lower").val();
                 var blood_sugar_value = $("#blood_sugar_value").val();
+                var vital_notes = $("#vital_notes").val();
 
                  $.ajax(
                  {
-                  url:BaseUrlSite+'appointment/AddAppointmentVitals',
+                  url:BaseUrlSite+'appointment/UpdateAppointmentVitals',
                   data:{
                       isAjaxCall    :'true',
                       hdn_appointment: hdn_appointment,
@@ -10346,12 +10407,14 @@
                       bp_standing_upper:bp_standing_upper,
                       bp_standing_lower:bp_standing_lower,
                       blood_sugar_value:blood_sugar_value,
+                      vital_notes:vital_notes,
+                      
                       Isajaxcall : 1
                     },
                     type:'POST',
                     success:function(data)
                     {
-                      
+                      $("#Prescription_link").click();
                      // loading('end');  
                     } 
                 });

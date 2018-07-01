@@ -190,5 +190,44 @@ class model_user extends CI_Model {
 			return $result;
 	  	
 	}
+
+	public function isValidOldPassword($user_id, $ecryptedOldPassword)
+	{
+		
+		$query  = $this->db->query(" 	
+										SELECT *,
+										(
+											SELECT tcfv.Custom_Field_value_name
+											FROM tbl_custom_field_values tcfv
+											WHERE tcfv.Custom_Field_Value_ID = tu.user_type
+										) AS user_type_name
+										FROM tbl_users tu
+										WHERE tu.user_id = '$user_id'
+										AND tu.user_pass = '$ecryptedOldPassword'
+									");
+		
+		$result = $query->result_array();			
+		return $result;
+	}
+
+	public function updateUserPassword($user_id , $ecryptedNewPassword)
+	{
+		
+		if($user_id != '' && $ecryptedNewPassword != '')
+		{
+			$query  = $this->db->query(" 
+										Update tbl_users
+										SET user_pass = '$ecryptedNewPassword'
+										WHERE user_id = '$user_id'
+
+									");
+		}
+		else
+		{
+			echo "Unexpected Error";
+		}
+		
+
+	}
   
 }

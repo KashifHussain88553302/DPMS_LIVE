@@ -67,7 +67,11 @@ class appointment extends CI_Controller
           }
           else
           {
-              $IsAppointment = $this->model_appointment->insertNewAppointments($Doctor_id, $AppointmentDate , $AppointmentTime , $AppointmentDescription);
+              $LastAppointmentId = $this->model_appointment->insertNewAppointments($Doctor_id, $AppointmentDate , $AppointmentTime , $AppointmentDescription);
+
+
+              $this->model_appointment->AddAppointmentVitalsNew($LastAppointmentId);
+              $this->model_appointment->AddAppointmentPrescriptionNew($LastAppointmentId);
 
                echo "Success";
           }
@@ -119,8 +123,8 @@ class appointment extends CI_Controller
       //echo "submitted";
       $complaints  = $this->input->post('complaints');
       $doctor_notes  = $this->input->post('doctor_notes');
+      $txt_diet_instruction  = $this->input->post('txt_diet_instruction');
 
-      echo "Complaints: ".$complaints.'<br>';
       //echo "doctor_notes: ".$doctor_notes.'<br>';
 
       $hdnDisRow  = $this->input->post('hdnDisRow');
@@ -164,12 +168,15 @@ class appointment extends CI_Controller
 
       }
 
-      $this->model_appointment->AddAppointmentPrescription($Appointment_id);
+      $this->model_appointment->UpdateAppointmentPrescription($Appointment_id);
       $this->model_appointment->UpdateAppointmentStatus($Appointment_id , $Temp_appointment_status_id = 16); // update the appointment status .
-     header('Location:'. base_url().'Appointment/AppointmentPrescription/'.$Appointment_id.'');
+     header('Location:'. base_url().'Appointment/AppointmentPrescriptionDetail/'.$Appointment_id.'');
      // die();
       
     }
+
+    $data['Vitals'] = $this->model_appointment->GetAppointmentVitals($Appointment_id);
+    $data['Prescriptions'] = $this->model_appointment->GetAppointmentprescription($Appointment_id);    
     //die();
      $this->load->view('Appointment/addAppointmentPrescription',$data);
   }
@@ -178,6 +185,12 @@ class appointment extends CI_Controller
   {
     $this->load->model('model_appointment');
     $this->model_appointment->AddAppointmentVitals();
+  }
+
+  public function UpdateAppointmentVitals()
+  {
+    $this->load->model('model_appointment');
+    $this->model_appointment->UpdateAppointmentVitals();
   }
 
   public function AppointmentPrescriptionDetail()

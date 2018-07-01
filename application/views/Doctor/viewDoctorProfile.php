@@ -144,7 +144,154 @@ $this->load->view('includes/header.php'); // load the header HTML
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="min-height: 548px;">
 
+            <section class="content-header">
+      <h1>
+        User Profile
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">User Profile</li>
+      </ol>
+    </section>
+    <section class="content">
+            <div class="modal fade" id="modal-default">
+           <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="register-box-body">
+                        <h3 class="login-box-msg" id="myModalLabel">Change Password</h3>
+                        <form action="http://localhost:9000/add_patient_appointment/" method="post">
+                            <input type="hidden" id="hdn_doctor_id" >
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-12 form-group has-feedback">
+                                Old Password
+                                    <input type="password"  class="form-control" name="old_Password" pattern="[A-Za-z0-9]*" title="only alpha numeric characters allowed" placeholder="Old Password"  id="old_Password" required="">
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-12 form-group has-feedback">
+                                New Password
+                                    <input type="password" class="form-control" name="new_Password" pattern="[A-Za-z0-9]*" title="only alpha numeric characters allowed" placeholder="New Password" id="new_Password" required="">
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-12 form-group has-feedback">
+                                Confirm Password
+                                    <input type="password"  class="form-control" name="confirm_Password" pattern="[A-Za-z0-9]*" title="only alpha numeric characters allowed" placeholder="Confirm Password" id="confirm_Password" required="">
+                                </div>
+                                
+                            </div>
+                            <input type="hidden" name="hdn_user_id" id="hdn_user_id" value="<?php echo $this->session->userdata('user_id');?>" />
+                            <div class="alert alert-success " id="div_Success_msg"  style="display:none;">
+                            
+                              </div>
+                            
+                            <div class="alert alert-danger " id="error"  style="display:none;"></div>
+                            <span style="color: red;" id="email_error"></span>
+                            <div class="row">
+                               <div class="col-md-11">
+                                   <button type="button"  onclick="funcValidateChangePassword()" id="btn_UpdatePassword" onclick="" class="btn btn-primary
+                                   btn-flat pull-right">Change Password</button>
+                               </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                <script type="text/javascript">
+                    function funcValidateChangePassword()
+  {
 
+    var old_Password = $("#old_Password").val();
+    var new_Password = $("#new_Password").val();
+    var confirm_Password = $("#confirm_Password").val();
+    var hdn_user_id = $("#hdn_user_id").val();
+    //AppointmentDescription = AppointmentDescription.trim();
+
+    $("#error").html("");
+    $("#div_Success_msg").html("");
+    $("#error").hide("");
+    $("#div_Success_msg").hide("");
+
+    if(hdn_user_id == '' || hdn_user_id == 0)
+    {
+      $("#error").html("Unexpected Error");
+      $("#error").show("");
+    }
+    else if(old_Password == '')
+    {
+      $("#error").html("Invalid Old Password");
+      $("#error").show("");
+    }
+    else if(new_Password == '')
+    {
+      $("#error").html("Please Enter New Password");
+      $("#error").show("");
+    }
+    else if(new_Password.length < 8)
+    {
+      $("#error").html("Pasword must be atleast 8 characters");
+      $("#error").show("");
+    }
+    else if(confirm_Password == '')
+    {
+      $("#error").html("Please Confirm Password");
+      $("#error").show("");
+    }
+    else if(new_Password != confirm_Password)
+    {
+      $("#error").html("Confirm Password does not match");  
+        $("#error").show("");
+    }
+    else
+    {
+       $.ajax(
+         {
+          url:BaseUrlSite+'common/ChangePassowrd',
+          data:{
+              isAjaxCall    :'true',
+              old_Password: old_Password,
+              new_Password: new_Password,
+              confirm_Password: confirm_Password,
+              hdn_user_id:hdn_user_id,
+              Isajaxcall : 1
+            },
+            type:'POST',
+            success:function(data)
+            {
+
+              if(data=='success')
+              {
+                $("#div_Success_msg").html("Password Succesfully Changed");
+                $("#div_Success_msg").show("");
+              }
+              else
+              {
+                $("#error").html(data);
+                $("#error").show("");
+              }
+              
+             // loading('end');  
+            } 
+        });
+    }
+  }
+                </script>
+            </div>
+        </div>
+        </div>
+        <!-- /.modal -->
             <!-- Content Header (Page header) -->
            
             <form class="form-horizontal main_form" method="post" action="" id="form_doctor_update_profile">
@@ -187,7 +334,7 @@ $this->load->view('includes/header.php'); // load the header HTML
                                                     <!-- /.description-block -->
                                                 </div>
                                                 <!-- /.col -->
-                                                <div class="col-sm-3  border-right">
+                                                <div class="col-sm-2  border-right">
                                                     <div class="description-block">
                                                         <h5 class="description-header">CNIC</h5>
                                                         <span class="description-text"><?php if($cnic != ""){ echo $cnic ; } else { echo "None"; }?></span>
@@ -430,12 +577,20 @@ $this->load->view('includes/header.php'); // load the header HTML
 
                        <input type="hidden"  id="hdn_submit_button" name="hdn_submit_button" value="hdn_submit_button">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <div class="form-group" style="margin-left:0px">
                                     <button  type="button" onclick="functionValidateForm()" class="btn btn-success  btn-sm" id="submit_button" name="submit_button" value="submit_button">
                                         Update
                                         profile
                                     </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" >
+                                  <button type="button" class="btn btn-danger  btn-sm" data-toggle="modal" data-target="#modal-default">
+                                  Change Password
+                                </button>
+                                   
                                 </div>
                             </div>
                         </div>

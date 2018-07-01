@@ -60,6 +60,14 @@
           </div>
           <?php
         }
+      if($this->session->flashdata('success_signup') != "")
+        {
+          ?>
+          <div class="alert alert-success">
+            <strong>Success!</strong> <?php echo $this->session->flashdata('success_signup'); ?>
+          </div>
+          <?php
+        }
     ?>
     <form action="" method="post" id="form_login">
       <div class="form-group has-feedback">

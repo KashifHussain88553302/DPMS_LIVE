@@ -26,7 +26,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">MAIN MENU</li>
 
         <li class="active treeview <?php if($this->uri->segment(1) == 'home' ){echo "menu-open" ;}else{}?>">
           <a href="#">
@@ -35,13 +35,13 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu" <?php if($this->uri->segment(1) == 'home' || $this->uri->segment(2) == 'viewprofile'){}else{echo "style='display:none;'" ;}?>">
+          <ul class="treeview-menu" <?php if($this->uri->segment(1) == 'home' || $this->uri->segment(2) == 'viewprofile' || $this->uri->segment(2) == 'ViewDoctorProfile' ){}else{echo "style='display:none;'" ;}?>">
             <li class="<?php if($this->uri->segment(1) == 'home' ){ echo 'active';}?>"><a href="<?php echo base_url();?>"><i class="fa fa-circle-o"></i> Home </a></li>
 
             <?php if($this->session->userdata('user_type') == 1) // 1- Doctor
             {
             ?>
-            <li class="<?php if($this->uri->segment(2) == 'viewprofile' ){ echo 'active';}?>" ><a href="<?php echo base_url().'Doctor/ViewDoctorProfile'; ?> "><i class="fa fa-circle-o"></i> User Profile </a></li>
+            <li class="<?php if($this->uri->segment(2) == 'ViewDoctorProfile' ){ echo 'active';}?>" ><a href="<?php echo base_url().'Doctor/ViewDoctorProfile'; ?> "><i class="fa fa-circle-o"></i> User Profile </a></li>
             <?php 
             }
             else
@@ -54,14 +54,14 @@
           </ul>
         </li>
 
-        <li class="active treeview <?php if($this->uri->segment(2) == 'griddoctor' ){echo "menu-open" ;}else{}?>">
+        <li class="active treeview <?php if($this->uri->segment(2) == 'griddoctor' || $this->uri->segment(2) == 'DoctorDetail' ){echo "menu-open" ;}else{}?>">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Doctor</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu"  <?php if(/*$this->uri->segment(1) == 'home' ||*/ $this->uri->segment(2) == 'griddoctor'){}else{echo "style='display:none;'" ;}?>>
+          <ul class="treeview-menu"  <?php if( $this->uri->segment(2) == 'griddoctor' || $this->uri->segment(2) == 'DoctorDetail'){}else{echo "style='display:none;'" ;}?>>
             <li class="<?php if($this->uri->segment(2) == 'griddoctor' ){ echo 'active';}?>"><a href="<?php echo base_url().'doctor/griddoctor';?>"><i class="fa fa-circle-o"></i> View Doctors </a></li>
           </ul>
         </li>
@@ -69,20 +69,18 @@
         <?php if($this->session->userdata('user_type') == 1) // 1- Doctor
         {
         ?>
-        <li class="active treeview <?php if($this->uri->segment(2) == 'ViewAppointment' ){echo "menu-open" ;}else{}?>">
+        <li class="active treeview <?php if($this->uri->segment(2) == 'ViewAppointment' || $this->uri->segment(2) == 'AppointmentPrescriptionDetail' || $this->uri->segment(2) == 'AppointmentPrescription' ){echo "menu-open" ;}else{}?>">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Appoinments</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu" <?php if(/*$this->uri->segment(1) == 'home' ||*/ $this->uri->segment(2) == 'ViewAppointment'){}else{echo "style='display:none;'" ;}?> >
+          <ul class="treeview-menu" <?php if( $this->uri->segment(2) == 'AppointmentPrescriptionDetail' || $this->uri->segment(2) == 'ViewAppointment' || $this->uri->segment(2) == 'AppointmentPrescription'){}else{echo "style='display:none;'" ;}?> >
             <li class="<?php if($this->uri->segment(1) == 'doctor' && $this->uri->segment(2) == 'ViewAppointment' ){ echo 'active';}?>"><a href="<?php echo base_url().'doctor/ViewAppointment';?>"><i class="fa fa-circle-o"></i> View Appoinments </a></li>
-          </ul>
-
-          <ul class="treeview-menu" <?php if(/*$this->uri->segment(1) == 'home' ||*/ $this->uri->segment(2) == 'ViewAppointment'){}else{echo "style='display:none;'" ;}?> >
             <li class="<?php if($this->uri->segment(1) == 'Patients' && $this->uri->segment(2) == 'ViewAppointment' ){ echo 'active';}?>"><a href="<?php echo base_url().'Patients/ViewAppointment';?>"><i class="fa fa-circle-o"></i> SELF Appoinments </a></li>
           </ul>
+
         </li>
         <?php
         } 
@@ -90,14 +88,14 @@
         if($this->session->userdata('user_type') == 2) // 2 - Patient
         {
         ?>
-        <li class="active treeview <?php if($this->uri->segment(2) == 'ViewAppointment' ){echo "menu-open" ;}else{}?>">
+        <li class="active treeview <?php if($this->uri->segment(2) == 'ViewAppointment' || $this->uri->segment(2) == 'AppointmentPrescriptionDetail'  ){echo "menu-open" ;}else{}?>">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Appoinments</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu" <?php if(/*$this->uri->segment(1) == 'home' ||*/ $this->uri->segment(2) == 'ViewAppointment'){}else{echo "style='display:none;'" ;}?> >
+          <ul class="treeview-menu" <?php if($this->uri->segment(2) == 'AppointmentPrescriptionDetail' || $this->uri->segment(2) == 'ViewAppointment'){}else{echo "style='display:none;'" ;}?> >
             <li class="<?php if($this->uri->segment(2) == 'ViewAppointment' ){ echo 'active';}?>"><a href="<?php echo base_url().'Patients/ViewAppointment';?>"><i class="fa fa-circle-o"></i> View Appoinments </a></li>
           </ul>
         </li>

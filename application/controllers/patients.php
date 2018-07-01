@@ -77,4 +77,5 @@ class patients extends CI_Controller
 
     $this->load->view('user/ViewAppointment',$data);
   }
+  
 }

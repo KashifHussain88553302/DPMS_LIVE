@@ -33,7 +33,7 @@ class signup extends CI_Controller {
       $txt_email                  = $this->input->post('txt_email');
       $sel_doctor_category        = $this->input->post('sel_doctor_category');
 
-      if(isset($_REQUEST['btn_createUser'])=="")
+      if(isset($_POST['hdn_btn_createUser'])=="")
       {
       }
       else
@@ -118,6 +118,16 @@ class signup extends CI_Controller {
               }
           }
           $data['success'] == "You have succesfully signup";
+          
+          /*
+          $_REQUEST['btn_loginUser'] = "btn_loginUser";
+          $_REQUEST['txt_usename'] = $txt_user_name;
+          $_REQUEST['txt_password'] = $txt_password;
+          */
+          // Set flash data 
+          $this->session->set_flashdata('success_signup', 'You have successfully signup !! login to continue.');
+          
+          
           header('Location:'. base_url().'');
         }
         else

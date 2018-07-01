@@ -354,13 +354,13 @@ $this->load->view('includes/header.php'); // load the header HTML
                                     <keeper-lock id="k-982izj23ypm" style="filter: grayscale(100%); top: 34px; left: 257px; z-index: 1; visibility: hidden;"></keeper-lock></div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <!---<div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label for="reference">Title: </label>
                                     <keeper-lock id="k-zrxgwnt3ts" style="filter: grayscale(100%); top: 34px; left: 257px; z-index: 1; visibility: hidden;"></keeper-lock></div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="row">
                         <div class="col-md-12">
@@ -447,21 +447,27 @@ $this->load->view('includes/header.php'); // load the header HTML
 
                 	$Is_active = $DayPlan['Is_active'];
                 	$dayStatus = "";
+                  $backbroundcolor = "";
+                  
                 	if($Is_active == 1)
                 	{
                 		$dayStatus = "Available";
+                    $backbroundcolor = "#20B2AA";
                 	}
                 	else{
                 		$dayStatus = "Day Off";
+                    $backbroundcolor = "#FF7F50";
                 	}
 
                 	$DocotorDayStartTime = $DayPlan['availability_time_start'];
                 	$DocotorDayEndTime = $DayPlan['availability_time_end'];
 
+                  $FormatedDocotorDayStartTime = date('g:i A', strtotime($DocotorDayStartTime));
+                  $FormatedDocotorDayEndTime = date('g:i A', strtotime($DocotorDayEndTime));
                 	 //date('M j Y g:i A', strtotime('2013-11-15 13:01:02'));
 
                 ?>
-                <tr>
+                <tr style="background-color: <?=$backbroundcolor ?>;    font-weight: bold;">
                   <td><?=$i ?></td>
                   <td>
                     <?=$availability_day ?>
@@ -470,7 +476,7 @@ $this->load->view('includes/header.php'); // load the header HTML
                     <?=$dayStatus ?>
                   </td>
                   <td><?php 
-                    if($Is_active == 1 ){ echo $DocotorDayStartTime; }
+                    if($Is_active == 1 ){ echo $FormatedDocotorDayStartTime; }
                     else
                     {
                       echo "--";
@@ -479,7 +485,7 @@ $this->load->view('includes/header.php'); // load the header HTML
                     
                   </td>
                   <td><?php 
-                    if($Is_active == 1 ){ echo $DocotorDayEndTime; }
+                    if($Is_active == 1 ){ echo $FormatedDocotorDayEndTime; }
                     else
                     {
                       echo "--";

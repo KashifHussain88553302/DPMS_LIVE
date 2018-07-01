@@ -83,7 +83,7 @@
         <span id="Error_user_name" class="spanError"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" id="txt_email" value="<?php echo $this->input->post('txt_email'); ?>" name="txt_email" class="form-control" placeholder="Email">
+        <input type="email" id="txt_email" value="<?php echo $this->input->post('txt_email'); ?>" name="txt_email" class="form-control" placeholder="Email" >
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         <span id="Error_txt_email" class="spanError"></span>
       </div>
@@ -182,7 +182,8 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button  class="btn btn-primary btn-block btn-flat" id="btn_createUser" name="btn_createUser">Register</button>
+          <input type="hidden" name="hdn_btn_createUser" value="hdn_btn_createUser"/>
+          <input type="button"  class="btn btn-primary btn-block btn-flat" id="btn_createUser" name="btn_createUser" value="Register">
         </div>
         <!-- /.col -->
       </div>
@@ -224,7 +225,7 @@
     $('[data-mask]').inputmask()
 
     $("#phoneNo").mask('0000-0000000');
-    $("#cnic").mask('00000-0000000-0');
+    $("#txt_cnic").mask('00000-0000000-0');
   });
 </script>
 
@@ -305,17 +306,46 @@
                 $("#txt_user_name").addClass( "Errorborderclass" );
                 return false;
               }
+              else
+              {
+                ValidateOnSuccessfunction();
+              }
               
              // loading('end');  
             } 
         });
       }
 
+    
+   // $("#form_signup").submit();
+  });
+
+  function ValidateOnSuccessfunction()
+  {
+    var txt_password        = $("#txt_password").val();
+    var txt_retype_password = $("#txt_retype_password").val();
+    var phoneNo             = $("#phoneNo").val();
+    var txt_cnic             = $("#txt_cnic").val();
+    var user_type              = $('#user_type').val();
+    var txt_email              = $('#txt_email').val();
+    var sel_city              = $('#sel_city').val();
+    var sel_doctor_category   = $('#sel_doctor_category').val();
+
+    var validations ={
+    email: [/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/, 'Please enter a valid email address']
+      };
+    validation = new RegExp(validations['email'][0]);
+
     if(txt_email == "" )
     {
       $("#Error_txt_email").html("Invalid Email");
       $("#txt_email").addClass( "Errorborderclass" );
       return false;
+    }
+    if (!validation.test(txt_email)){
+          $("#Error_txt_email").html("Invalid Email Format");
+          $("#txt_email").addClass( "Errorborderclass" );
+          return false;
     }
     if(phoneNo == "" || phoneNo.length < 12)
     {
@@ -331,13 +361,13 @@
     }
     if(sel_city == "" || sel_city == 0)
     {
-      $("#Error_sel_city").html("Select user type");
+      $("#Error_sel_city").html("Select City");
       $("#sel_city").addClass( "Errorborderclass" );
       return false;
     }
     if(user_type == "" || user_type == 0)
     {
-      $("#Error_user_type").html("Select user type");
+      $("#Error_user_type").html("Select Account type");
       $("#user_type").addClass( "Errorborderclass" );
       return false;
     }
@@ -374,19 +404,14 @@
       $("#txt_retype_password").addClass( "Errorborderclass" );
       return false;
     }
-    if(txt_ph_no == '')
-    {
-      
-      $("#Error_ph_no").html("Please enter phone no");
-      $("#txt_ph_no").addClass( "Errorborderclass" );
-      return false;
-    }
     else
     {
+      $("#form_signup").submit();
       
     }
-   // $("#form_signup").submit();
-  });
+  }
+
+
 </script>
 </body>
 </html>

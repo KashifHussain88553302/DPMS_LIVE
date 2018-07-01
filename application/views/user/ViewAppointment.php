@@ -47,7 +47,7 @@ $this->load->view('includes/header.php'); // load the header HTML
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List Of All Appointments</h3>
+              <h3 class="box-title">View All Appointments</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -233,19 +233,9 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <?php
-                  if($this->session->userdata('user_type') == 1) // 1- Doctor
-                  {?>
-
-                    <th>Patient Name</th>
-                  <?php
-                  }else
-                  { 
-                  ?>
-                    <th>Doctor Name</th>
-                  <?php
-                  }
-                  ?>
+                  
+                  <th>Doctor Name</th>
+                  
                   <th>Day</th>
                   <th>Time</th>
                   <th style="width:30%;">Description</th>
@@ -316,6 +306,14 @@ $this->load->view('includes/header.php'); // load the header HTML
                       ?>
                          <a href="<?php echo base_url().'Appointment/AppointmentPrescriptionDetail/'.$Appointment['appointment_id'] ; ?>" target="_blank"  class="btn  btn-primary btn-sm">View Prescription</a>
                          <!--<button type="button" class="btn  btn-primary btn-sm">Primary</button>-->
+                 
+                      <?php 
+                    }
+                    if($Appointment['appointment_status_id'] != 15 && $Appointment['appointment_status_id'] != 16)
+                    {
+                      ?>
+                      <button type="button" class="btn  btn-danger btn-sm" onclick="funChangeAppointmentStatus(<?=$Appointment['appointment_id']?>,<?=$Appointment['appointment_status_id'] ?> , CancelAppointment=1)">Cancel</button>
+                        <!-- <a href="javascript:void(0);"  class="">Cancel</a>-->
                  
                       <?php 
                     }

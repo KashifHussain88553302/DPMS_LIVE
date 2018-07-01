@@ -43,7 +43,7 @@ $this->load->view('includes/header.php'); // load the header HTML
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Doctor</a></li>
-        <li class="active">View</li>
+        <li class="active">View Doctors</li>
       </ol>
     </section>
 
@@ -54,7 +54,7 @@ $this->load->view('includes/header.php'); // load the header HTML
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List All Doctors</h3>
+              <h3 class="box-title">View All Doctors</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -181,27 +181,39 @@ $this->load->view('includes/header.php'); // load the header HTML
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                foreach($doctors as $doctor)
-                {
-
-                ?>
-                <tr>
-                  <td><?php echo $doctor['user_fname'].' '.$doctor['user_lname']; ?></td>
-                  <td>
-                    <?=$doctor['user_city_name'] ?>
-                  </td>
-                  <td>
-                    <?=$doctor['user_category_name'] ?>
-                  </td>
-                  <td><?=$doctor['user_ph_no'] ?></td>
-                  <td>
-                    <!--<a href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank"></a>-->
-                    <a  href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank" class="btn  btn-primary btn-sm">View Detail</a>
-                  </td>
-                </tr>
                 <?php 
-                }
+                //echo count($doctors);die();
+                //if(count($doctors) > 0)
+                //{
+                    foreach($doctors as $doctor)
+                    {
+
+                    ?>
+                    <tr>
+                      <td><?php echo $doctor['user_fname'].' '.$doctor['user_lname']; ?></td>
+                      <td>
+                        <?=$doctor['user_city_name'] ?>
+                      </td>
+                      <td>
+                        <?=$doctor['user_category_name'] ?>
+                      </td>
+                      <td><?=$doctor['user_ph_no'] ?></td>
+                      <td>
+                        <!--<a href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank"></a>-->
+                        <a  href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank" class="btn  btn-primary btn-sm">View Detail</a>
+                      </td>
+                    </tr>
+                    <?php 
+                    }
+                //}
+                //else
+                //{
+                  ?>
+                  <!--  <tr>
+                      No Record Found
+                    </tr>-->
+                  <?php 
+                //}
                 ?>
                 </tfoot>
               </table>

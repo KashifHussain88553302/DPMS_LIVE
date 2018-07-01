@@ -404,7 +404,16 @@ $this->load->view('includes/footer'); // load the footer HTML
 
   function funChangeAppointmentStatus(appointment_id , appointment_status_id , CancelAppointment)
   {
-      if(confirm("Are you sure you want to approve this Appointment?"))
+    var msgConfirm="";
+      if(CancelAppointment == 1)
+      {
+        msgConfirm = "Are you sure you want to cancel this Appointment?";
+      }
+      else
+      {
+        msgConfirm = "Are you sure you want to approve this Appointment?";
+      }
+      if(confirm(msgConfirm))
       {
           $.ajax(
          {

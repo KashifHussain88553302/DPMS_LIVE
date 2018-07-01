@@ -711,6 +711,9 @@
         }
     </style>
 
+<?php
+ 
+?>
 <div class="">
     <div class="row ">
         <div class="col-md-12" style="margin-top: 10px">

@@ -56,10 +56,9 @@
           </a>
           <ul class="treeview-menu"  <?php if(/*$this->uri->segment(1) == 'home' ||*/ $this->uri->segment(2) == 'griddoctor'){}else{echo "style='display:none;'" ;}?>>
             <li class="<?php if($this->uri->segment(2) == 'griddoctor' ){ echo 'active';}?>"><a href="<?php echo base_url().'doctor/griddoctor';?>"><i class="fa fa-circle-o"></i> View Doctors </a></li>
+             <li class="<?php if($this->uri->segment(2) == 'viewAllPatients' ){ echo 'active';}?>"><a href="<?php echo base_url().'Admin/viewAllPatients';?>"><i class="fa fa-circle-o"></i> View Patient </a></li>
           </ul>
-          <ul class="treeview-menu"  <?php if(/*$this->uri->segment(1) == 'home' ||*/ $this->uri->segment(2) == 'griddoctor'){}else{echo "style='display:none;'" ;}?>>
-            <li class="<?php if($this->uri->segment(2) == 'viewAllPatients' ){ echo 'active';}?>"><a href="<?php echo base_url().'Admin/viewAllPatients';?>"><i class="fa fa-circle-o"></i> View Patient </a></li>
-          </ul>
+          
         </li>
 
         <li class="active treeview <?php if($this->uri->segment(2) == 'ViewAppointment' ){echo "menu-open" ;}else{}?>">

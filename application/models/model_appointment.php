@@ -133,6 +133,7 @@ class model_appointment extends CI_Model
 										tbl_user_doctor_appointment  UDA
 										WHERE doctor_id = '$user_id'
 										$WhereCondition
+										ORDER BY UDA.appointment_date DESC 
 									");
 		
 		$result = $query->result_array();			
@@ -254,6 +255,26 @@ class model_appointment extends CI_Model
 									'$user_id'
 									)	
 								");
+		return $this->db->insert_id();
+	}
+
+	public function AddAppointmentVitalsNew($LastAppointmentId)
+	{
+		
+		if($LastAppointmentId != 0 && $LastAppointmentId != '')
+		{
+
+			$query = $this->db->query("
+									INSERT iNTO tbl_appointment_vitals
+									(
+									    fk_appointment_id
+									)
+									VALUES 
+									(
+									'$LastAppointmentId'
+									)	
+								");
+		}
 	}
 
 	public function AddAppointmentVitals()
@@ -330,6 +351,60 @@ class model_appointment extends CI_Model
 		}
 	}
 
+	public function UpdateAppointmentVitals()
+	{
+
+		$hdn_appointment  = $this->input->post('hdn_appointment');
+		$temp_value  = $this->input->post('temp_value');
+		$temp_point  = $this->input->post('temp_point');
+		$pulse  = $this->input->post('pulse');
+		$height  = $this->input->post('height');
+		$weight  = $this->input->post('weight');
+
+		$bmi  = $this->input->post('bmi');
+		$left_eye_upper  = $this->input->post('left_eye_upper');
+		$left_eye_lower  = $this->input->post('left_eye_lower');
+		$right_eye_upper  = $this->input->post('right_eye_upper');
+		$right_eye_lower  = $this->input->post('right_eye_lower');
+		$color_vision  = $this->input->post('color_vision');
+		$bp_standing_upper  = $this->input->post('bp_standing_upper');
+		$bp_standing_lower  = $this->input->post('bp_standing_lower');
+		$blood_sugar_value  = $this->input->post('blood_sugar_value');
+		$vital_notes  = $this->input->post('vital_notes');
+		
+		$user_id = $this->session->userdata('user_id');
+
+		$timedate = date('Y-m-d H:i:s');
+
+		if($hdn_appointment != 0 && $hdn_appointment != '')
+		{
+
+			//$this->checkVitalAlredyexist();
+
+			$query = $this->db->query("
+									Update tbl_appointment_vitals
+									SET temperature_value = '$temp_value',
+									    temperature_point = '$temp_point',
+									    pulse = '$pulse',
+									    height = '$height',
+									    Weight = '$weight',
+									    bmi = '$bmi',
+									    left_eye_up = '$left_eye_upper',
+									    left_eye_lower = '$left_eye_lower',
+									    right_eye_up = '$right_eye_upper',
+									    right_eye_lower = '$right_eye_lower',
+									     color_vision = '$color_vision',
+									     blood_pressure_upper = '$bp_standing_upper',
+									     blood_pressure_lower= '$bp_standing_lower',
+									     blood_sugar = '$blood_sugar_value' ,
+									     vital_notes = '$vital_notes' ,
+									     appointment_vital_created_date = '$timedate',
+									    appointment_vital_creator_user_id = '$user_id'
+									    WHERE fk_appointment_id = '$hdn_appointment';
+										
+								");
+		}
+	}
 
 	public function checkVitalAlredyexist()
 	{
@@ -357,7 +432,7 @@ class model_appointment extends CI_Model
 									(
 									'$Appointment_id',
 									'$disease_1',
-									'$user_id',
+									'$diseases_note_1',
 									'$timedate',
 									'$user_id'
 									)	
@@ -396,6 +471,28 @@ class model_appointment extends CI_Model
 								");
 	}
 
+	public function AddAppointmentPrescriptionNew($Appointment_id)
+	{
+      	$user_id = $this->session->userdata('user_id');
+
+		$timedate = date('Y-m-d H:i:s');
+
+		if($Appointment_id != "" && $Appointment_id != 0)
+		{
+			$query = $this->db->query("
+									INSERT iNTO tbl_appintment_prescription
+									(
+									    fk_appointment_id
+									)
+									VALUES 
+									(
+									'$Appointment_id'
+									)	
+								");
+		}
+		
+	}
+
 	public function AddAppointmentPrescription($Appointment_id)
 	{
 		$complaints  = $this->input->post('complaints');
@@ -427,6 +524,31 @@ class model_appointment extends CI_Model
 									)	
 								");
 	}
+
+	public function UpdateAppointmentPrescription($Appointment_id)
+	{
+		$complaints  = $this->input->post('complaints');
+      	$doctor_notes  = $this->input->post('doctor_notes');
+      	$txt_diet_instruction  = $this->input->post('txt_diet_instruction');
+
+      	
+      	$user_id = $this->session->userdata('user_id');
+
+		$timedate = date('Y-m-d H:i:s');
+		if($Appointment_id != "" && $Appointment_id != 0)
+		{
+			$query = $this->db->query("
+									UPDATE tbl_appintment_prescription
+									SET appintment_prescription_complaint = '$complaints' ,
+									    appintment_prescription_doctor_notes = '$doctor_notes',
+									    appintment_prescription_diet_instruction_description= '$txt_diet_instruction'
+									    WHERE fk_appointment_id = '$Appointment_id'
+								");
+		}
+		
+	}
+
+	
 
 	public function GetDetail($Appointment_id)
 	{
