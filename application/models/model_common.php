@@ -203,5 +203,10 @@ class model_common extends CI_Model
 	}
 
 
+	public function sendmail()
+	{
+		
+	}
+
 
 }

@@ -47,6 +47,9 @@ $this->load->view('includes/header.php'); // load the header HTML
     $cnic = $Doctor['user_cnic'];
     $user_type_name = $Doctor['user_type_name'];
     $doctor_description = $Doctor['doctor_description'];
+
+    $doctor_isactive = $Doctor['user_is_active'];
+    $doctor_isdoctor = $Doctor['user_type'];
     
   }
 
@@ -84,6 +87,42 @@ $this->load->view('includes/header.php'); // load the header HTML
 
     <!-- Main content -->
     <section class="content">
+
+    <?php 
+    if(($doctor_isactive == 0  && $this->session->userdata('admin_id') == '') || $doctor_isdoctor == 2) // 0 - inactive 2 - patient
+    { 
+    ?>
+    <div class="error-page">
+        <h2 class="headline text-red">500</h2>
+
+        <div class="error-content">
+          <h3><i class="fa fa-warning text-red"></i> Oops! Something went wrong.</h3>
+
+          <p>
+            We will work on fixing that right away.
+            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+          </p>
+
+          <form class="search-form">
+            <div class="input-group">
+              <input type="text" name="search" class="form-control" placeholder="Search">
+
+              <div class="input-group-btn">
+                <button type="submit" name="submit" class="btn btn-danger btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.input-group -->
+          </form>
+        </div>
+      </div>
+      <?php
+
+      }
+      else
+      {
+
+      ?>
       <div class="modal fade" id="modal-default">
            <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
@@ -507,6 +546,9 @@ $this->load->view('includes/header.php'); // load the header HTML
         </div>
         <!-- /.col -->
       </div>
+      <?php
+    }
+      ?>
       <!-- /.row -->  
     </section>
    </div>

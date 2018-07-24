@@ -133,7 +133,15 @@ class model_doctor extends CI_Model {
 
 	public function GetDoctorInfo($user_id)
   {
-    
+  	$clause = "";
+    if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+    {
+    	$clause = "";
+    }
+    else
+    {
+    	$clause = "AND user_is_active = 1";
+    }
     if($user_id != 0 && $user_id != '')
     {
       $query  = $this->db->query("  
@@ -173,7 +181,7 @@ class model_doctor extends CI_Model {
 					) As doctor_description
                     FROM tbl_users tu
                     WHERE tu.user_id = '$user_id'
-                    AND user_is_active = 1
+                    $clause
                   ");
     
       $result = $query->result_array();     

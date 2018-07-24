@@ -38,11 +38,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-      <b>DPMS</b>
+      <b>DPMS Admin</b>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start a new journey with us</p>
+    <p class="login-box-msg"></p>
     <?php 
     if($error != "")
     {
@@ -102,7 +102,7 @@
     <!-- /.social-auth-links -->
 
     <!--<a href="#">I forgot my password</a><br> -->
-    <a href="<?php echo base_url().'signup' ?>" class="text-center">Register a new membership</a>
+    
 
   </div>
   <!-- /.login-box-body -->

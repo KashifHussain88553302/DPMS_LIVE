@@ -18,11 +18,11 @@ $this->load->view('includes/header.php'); // load the header HTML
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-	<?php
-	$this->load->view('includes/headbar'); // load the headbar HTML
-	?>
+  <?php
+  $this->load->view('includes/headbar'); // load the headbar HTML
+  ?>
 
-	<?php
+  <?php
   if($this->session->userdata('admin_id') != '')
   {
     $this->load->view('includes/adminsidebar'); // load the  sidebar HTML
@@ -31,19 +31,19 @@ $this->load->view('includes/header.php'); // load the header HTML
   {
     $this->load->view('includes/sidebar'); // load the  sidebar HTML
   }
-	?>
+  ?>
 
-	 <!-- Content Wrapper. Contains page content -->
+   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Doctor
+        Patient
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Doctor</a></li>
-        <li class="active">View</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> User</a></li>
+        <li class="active">View Patient</li>
       </ol>
     </section>
 
@@ -54,7 +54,7 @@ $this->load->view('includes/header.php'); // load the header HTML
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List All Doctors</h3>
+              <h3 class="box-title">View All Patient</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -79,60 +79,37 @@ $this->load->view('includes/header.php'); // load the header HTML
                   <div class="form-group"> -->
                   <!-- Div Date Range picker --> 
                   <?php
-                    $sel_doctor = $this->input->post('sel_doctor');
+                    $sel_patient = $this->input->post('sel_patient');
                   ?>
-                  <div class="" style="width:15%;float: left;margin-right: 10px;">
-                    <select class="form-control select2" name="sel_doctor" id="sel_doctor" style="">
-                      <option value="0">All Doctors</option>
+                  <div class="" style="width:15%;float: left;margin-right: 10px;" >
+                    <select class="form-control select2" name="sel_patient" id="sel_patient" style="">
+                      <option value="0">All Patients</option>
                       <?php 
-                      foreach($Memberdoctors as $Memberdoctor)
+                      foreach($Member as $Memberpatient)
                       {
 
                       ?>
-                        <option value="<?=$Memberdoctor['user_id'] ?>" <?php if($sel_doctor == $Memberdoctor['user_id']){ echo "selected" ;} ?>><?php echo $Memberdoctor['user_fname'].' '.$Memberdoctor['user_lname']; ?></option>
+                        <option value="<?=$Memberpatient['user_id'] ?>" <?php if($sel_patient == $Memberpatient['user_id']){ echo "selected" ;} ?>><?php echo $Memberpatient['user_fname'].' '.$Memberpatient['user_lname']; ?></option>
                       <?php 
                       }
                       ?>
                     </select>
                   </div>
 
-                  <?php
-                  $sel_doctor_category = $this->input->post('sel_doctor_category');
-                  //echo $sel_doctor_category ; die("hello");
-                  ?>
-                  <div class="col-md-2">
-                  <!-- select -->
-                <div class="form-group">
-
-                  <select class="form-control" name="sel_doctor_category" id="sel_doctor_category">
-                    <option value="0">All categories</option>
-                  <?php 
-                      foreach($Doctorscategories as $Doctorscategory)
-                      {
-                      ?>
-                        <option value="<?=$Doctorscategory['Custom_Field_Value_ID'] ?>" <?php if($sel_doctor_category == $Doctorscategory['Custom_Field_Value_ID']){ echo "selected" ;}  ?>><?php echo $Doctorscategory['Custom_Field_value_name']; ?></option>
-                      <?php 
-                      }
-                      ?>
-
-                  </select>
-                </div>
-                </div>
-
                 <?php
-                  $sel_doctor_city = $this->input->post('sel_doctor_city');
+                  $sel_patient_city = $this->input->post('sel_patient_city');
                   //echo $sel_doctor_category ; die("hello");
                   ?>
                 <div class="col-md-2">
                   <!-- select -->
                 <div class="form-group">
-                  <select class="form-control" name="sel_doctor_city" id="sel_doctor_city">
+                  <select class="form-control" name="sel_patient_city" id="sel_patient_city">
                     <option value="0">All cities</option>
                   <?php 
                       foreach($cities as $city)
                       {
                       ?>
-                        <option value="<?=$city['Custom_Field_Value_ID'] ?>" <?php if($sel_doctor_city == $city['Custom_Field_Value_ID']){ echo "selected" ;}  ?>><?php echo $city['Custom_Field_value_name']; ?></option>
+                        <option value="<?=$city['Custom_Field_Value_ID'] ?>" <?php if($sel_patient_city == $city['Custom_Field_Value_ID']){ echo "selected" ;}  ?>><?php echo $city['Custom_Field_value_name']; ?></option>
                       <?php 
                       }
                       ?>
@@ -174,34 +151,116 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <thead>
                 <tr>
                   <th>Name</th>
+                  <?php
+                        if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                        {
+                          ?>
+                  <th>User Name</th>
+                       <?php }
+                          ?>
+
                   <th>City</th>
-                  <th>Category</th>
+                  <!--<th>Category</th>-->
                   <th>Phone No</th>
+                  <?php
+                  if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                  {
+                  ?>
+                  <th>Status</th>
+                  <?php
+                  }
+                    ?>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                foreach($doctors as $doctor)
-                {
-
-                ?>
-                <tr>
-                  <td><?php echo $doctor['user_fname'].' '.$doctor['user_lname']; ?></td>
-                  <td>
-                    <?=$doctor['user_city_name'] ?>
-                  </td>
-                  <td>
-                    <?=$doctor['user_category_name'] ?>
-                  </td>
-                  <td><?=$doctor['user_ph_no'] ?></td>
-                  <td>
-                    <!--<a href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank"></a>-->
-                    <a  href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank" class="btn  btn-primary btn-sm">View Detail</a>
-                  </td>
-                </tr>
                 <?php 
-                }
+                //echo count($doctors);die();
+                //if(count($doctors) > 0)
+                //{
+                    foreach($Memberpatients as $patients)
+                    {
+
+                    ?>
+                    <tr>
+                      <td><?php echo $patients['user_fname'].' '.$patients['user_lname']; ?></td>
+                      <?php
+                        if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                        {
+                          ?>
+                            <td><?=$patients['user_uname'] ?></td>
+                          <?php
+                        }
+                        ?>
+
+                      <td>
+                        <?=$patients['user_city_name'] ?>
+                      </td>
+                      <!--<td>
+                        <?=$patients['user_category_name'] ?>
+                      </td>-->
+                      <td><?=$patients['user_ph_no'] ?></td>
+
+                      <?php
+                        if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                        {
+                        ?>
+                        <td>
+                            <?php
+                            if($patients['user_is_active'] == 1) 
+                            {
+                            ?>
+                            Active
+                            <?php 
+                            }
+                            else
+                            {
+                            ?>
+                              Inactive
+                            <?php 
+                            }
+                            ?>
+                          </td>
+                          <?php
+                          }
+                          ?>
+
+                      <td>
+                        <!--<a href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank"></a>-->
+                        <a  href="javascript:void(0)" onclick="funcviewAppointmentDetail(appintmentstate='<?=$patients['user_id'];?>')" class="btn  btn-primary btn-sm">View Appointments</a>
+                        <?php
+                          if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                          {
+
+                            if($patients['user_is_active'] == 1) 
+                            {
+                            
+                            ?>
+
+                            <a  href="javascript:void(0)" onclick="funcUpdateUser(0,<?=$patients['user_id'];?>)" class="btn  btn-danger btn-sm">Inactive</a>
+                            <?php
+                            }else
+                            { 
+                            ?>
+                            <a  href="javascript:void(0)"  onclick="funcUpdateUser(1,<?=$patients['user_id'];?>)" class="btn btn-success btn-sm">Active</a>
+                          <?php 
+                            }
+                          }
+                        ?>
+
+                      </td>
+                    </tr>
+                    <?php 
+                    }
+                //}
+                //else
+                //{
+                  ?>
+                  <!--  <tr>
+                      No Record Found
+                    </tr>-->
+                  <?php 
+                //}
                 ?>
                 </tfoot>
               </table>
@@ -257,5 +316,54 @@ $this->load->view('includes/footer'); // load the footer HTML
     })
   })
 
+
+  function funcUpdateUser(status,user)
+  {
+
+    var msgConfirm="";
+      if(status == 1)
+      {
+        msgConfirm = "Are you sure you want to active the user?";
+      }
+      else
+      {
+        msgConfirm = "Are you sure you want to Inactive the user?";
+      }
+      if(confirm(msgConfirm))
+      {
+          $.ajax(
+               {
+                url:BaseUrlSite+'common/funcUpdateUserStatus',
+                data:{
+                    isAjaxCall    :'true',
+                    status: status,
+                    user : user
+                  },
+                  type:'POST',
+                  success:function(data)
+                  {
+                  location.reload();
+                   // loading('end');  
+                  } 
+              });
+    }
+  }
+
    
 </script>
+
+<script type="text/javascript">
+      function funcviewAppointmentDetail(patients,IsToday)
+      {
+        
+        
+        $("#hdn_sel_patient").val(patients);
+        //var form = "#hdn_get_view_detail";
+        $("#hdn_get_view_detail").submit();
+      }
+</script>
+
+<form method="post" action="<?php echo base_url().'Admin/ViewAppointment'?>" target="_blank" id="hdn_get_view_detail">
+    <input type="hidden" name="sel_patient" id="hdn_sel_patient" value="">
+    <input type="hidden" name="btn_search" id="btn_search" value="">
+</form>

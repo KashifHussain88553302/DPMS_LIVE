@@ -114,7 +114,7 @@ class admin extends CI_Controller {
 
     }
 
-    $this->load->view('user/login', $data);
+    $this->load->view('admin/login', $data);
   }
 
   public function signout()
@@ -173,10 +173,10 @@ class admin extends CI_Controller {
 
   public function viewAllPatients()
   {
-    die("View all patinet");
     $data[] = "";
     $this->load->model('model_doctor');
     $this->load->model('model_common');
+    $this->load->model('model_patient');
     
     /**
 
@@ -186,17 +186,19 @@ class admin extends CI_Controller {
       $_POST['sel_isactive'] = 1;
     }
 
-    $data['doctors'] = $this->model_doctor->GetListDoctors();
+    $data['Member'] = $this->model_common->getAllPatient();
 
-    $data['Memberpatients'] = $this->model_common->getAllPatient();
+    $data['Memberpatients'] = $this->model_patient->Getpatientlist();
 
     $data['Doctorscategories'] = $this->model_common->getCustomFieldValues($getCustomField=3); // 3 - Doctor category
 
     $data['cities'] = $this->model_common->getCustomFieldValues($getCustomField=2); // 2 - cities
 
     
-    $this->load->view('Doctor/griddoctors',$data);
+    $this->load->view('Admin/viewAllPatients',$data);
   }
+
+  
 
 
   

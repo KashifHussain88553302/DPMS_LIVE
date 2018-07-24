@@ -53,10 +53,10 @@ class doctor extends CI_Controller {
       header('Location:'. base_url());
     }
     
-     $data['Doctor_id'] = $Doctor_id;
+    $data['Doctor_id'] = $Doctor_id;
     $data['doctorDayPlan'] = $this->model_doctor->GetDoctorDayPlan($Doctor_id);
     $data['DoctorInfo'] = $this->model_doctor->GetDoctorInfo($Doctor_id);
-
+    
     $this->load->view('Doctor/DoctorDetail',$data);
   }
   

@@ -229,5 +229,29 @@ class model_user extends CI_Model {
 		
 
 	}
+
+	public function funcUpdateUserStatus($status ,$user)
+	{
+
+		$timedate = date('Y-m-d H:i:s');
+		$SessionUserId = $this->session->userdata('user_id') ;
+		
+		if($status != '' && $user != '')
+		{
+			$query  = $this->db->query(" 
+										Update tbl_users
+										SET user_is_active = $status,
+										user_modified_date = '$timedate',
+										user_modified_user_id = '$SessionUserId'
+										WHERE user_id = $user
+
+									");
+			
+		}
+		else
+		{
+			echo "Unexpected Error";
+		}
+	}
   
 }

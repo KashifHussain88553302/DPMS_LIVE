@@ -174,9 +174,25 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <thead>
                 <tr>
                   <th>Name</th>
+                  <?php
+                  if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                  {
+                  ?>
+                  <th>User Name</th>
+                  <?php
+                  }
+                    ?>
                   <th>City</th>
                   <th>Category</th>
                   <th>Phone No</th>
+                  <?php
+                  if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                  {
+                  ?>
+                  <th>Status</th>
+                  <?php
+                  }
+                    ?>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -191,6 +207,14 @@ $this->load->view('includes/header.php'); // load the header HTML
                     ?>
                     <tr>
                       <td><?php echo $doctor['user_fname'].' '.$doctor['user_lname']; ?></td>
+                      <?php
+                        if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                        {
+                          ?>
+                            <td><?=$doctor['user_uname'] ?></td>
+                          <?php
+                        }
+                        ?>
                       <td>
                         <?=$doctor['user_city_name'] ?>
                       </td>
@@ -198,9 +222,54 @@ $this->load->view('includes/header.php'); // load the header HTML
                         <?=$doctor['user_category_name'] ?>
                       </td>
                       <td><?=$doctor['user_ph_no'] ?></td>
+
+                      <?php
+                        if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                        {
+                        ?>
+                        <td>
+                            <?php
+                            if($doctor['user_is_active'] == 1) 
+                            {
+                            ?>
+                            Active
+                            <?php 
+                            }
+                            else
+                            {
+                            ?>
+                              Inactive
+                            <?php 
+                            }
+                            ?>
+                          </td>
+                          <?php
+                          }
+                          ?>
+
                       <td>
                         <!--<a href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank"></a>-->
                         <a  href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank" class="btn  btn-primary btn-sm">View Detail</a>
+                        <?php
+                          if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                          {
+
+                            if($doctor['user_is_active'] == 1) 
+                            {
+                            
+                            ?>
+
+                            <a  href="javascript:void(0)" onclick="funcUpdateUser(0,<?=$doctor['user_id'];?>)" class="btn  btn-danger btn-sm">Inactive</a>
+                            <?php
+                            }else
+                            { 
+                            ?>
+                            <a  href="javascript:void(0)"  onclick="funcUpdateUser(1,<?=$doctor['user_id'];?>)" class="btn btn-success btn-sm">Active</a>
+                          <?php 
+                            }
+                          }
+                        ?>
+
                       </td>
                     </tr>
                     <?php 
@@ -268,6 +337,39 @@ $this->load->view('includes/footer'); // load the footer HTML
       showInputs: false
     })
   })
+
+
+  function funcUpdateUser(status,user)
+  {
+
+    var msgConfirm="";
+      if(status == 1)
+      {
+        msgConfirm = "Are you sure you want to active the user?";
+      }
+      else
+      {
+        msgConfirm = "Are you sure you want to Inactive the user?";
+      }
+      if(confirm(msgConfirm))
+      {
+          $.ajax(
+               {
+                url:BaseUrlSite+'common/funcUpdateUserStatus',
+                data:{
+                    isAjaxCall    :'true',
+                    status: status,
+                    user : user
+                  },
+                  type:'POST',
+                  success:function(data)
+                  {
+                  location.reload();
+                   // loading('end');  
+                  } 
+              });
+    }
+  }
 
    
 </script>

@@ -148,8 +148,8 @@
           </ul>
         </li>
         <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>-->
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
+        <li class="header">Information</li>
+        <li><a href="<?php echo base_url().'Patients/Patient_guideline';?>"><i class="fa fa-circle-o text-aqua"></i> <span>User guide</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

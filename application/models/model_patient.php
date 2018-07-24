@@ -65,4 +65,68 @@ class model_patient extends CI_Model
 		
 
 	}
+
+	public function Getpatientlist()
+	{
+		
+
+		$WhereCondition = "";
+		//$txt_name              	= $this->input->post('txt_name');
+		$sel_patient              = $this->input->post('sel_patient');
+		$sel_patient_city     = $this->input->post('sel_patient_city');
+		$selIsActive 			= $this->input->post('sel_isactive');
+
+		if($selIsActive != '' )
+        { 	
+        	$WhereCondition = "
+										AND tu.user_is_active = $selIsActive ";
+        }
+
+		if($this->session->userdata('user_type') == 1) // 1- Doctor
+		{ 
+			$WhereCondition .= "AND user_id != '".$this->session->userdata('user_id')."'";
+		}
+
+
+		if(isset($_POST['btn_search'] ))
+		{
+			/*if($txt_name != '')
+			{
+				$WhereCondition .= "AND user_fname like '%$txt_name%'";
+			}*/
+
+
+			if($sel_patient != '' && $sel_patient != 0)
+			{
+				$WhereCondition .= "AND user_id = '$sel_patient'";
+			} 
+
+			
+
+			if($sel_patient_city != '' && $sel_patient_city != 0 )
+			{
+				$WhereCondition .= "AND user_city like '$sel_patient_city'";
+			} 
+
+			
+		}	
+		
+	  	$query  = $this->db->query(" 	
+										SELECT *,
+										(
+											SELECT tcfv.Custom_Field_value_name
+											FROM tbl_custom_field_values tcfv
+											WHERE tcfv.Custom_Field_Value_ID = tu.user_city
+										) AS user_city_name
+										FROM `tbl_users` tu 
+										WHERE 1= 1 
+										AND tu.user_type = 2
+										$WhereCondition
+										ORDER BY user_fname , user_lname
+									");
+		
+		$result = $query->result_array();			
+		return $result;
+	}
+	  
 }

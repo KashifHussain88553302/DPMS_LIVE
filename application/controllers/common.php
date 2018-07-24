@@ -60,4 +60,44 @@ class common extends CI_Controller {
         }
 
   }
+
+  public function funcUpdateUserStatus()
+  {
+
+    $this->load->model('model_user');
+      $status = $this->input->post('status');
+       $user = $this->input->post('user');
+       if($status != '' && $user != '' && $user != 0 )
+       {
+          $this->model_user->funcUpdateUserStatus($status ,$user);
+       }
+  }
+
+  public function TestingSendEmail()
+  {
+   
+   // Code to Send the Email from the system
+    // init the resource
+  $ch = curl_init();
+
+    $postData = array(
+        'ToEmail' => 'taskeenbhinder@hotmail.be ',
+        'EmailSubject' => 'DPMS Testing Email',
+        'EmailBody' => 'Dear User you have been registered to <b>DPMS</b> Now open your account and proceed.'
+    );
+
+
+    $URL = base_url().'EmailSending.php'; // URL to send the curl call
+
+      curl_setopt_array($ch, array(
+        CURLOPT_URL => $URL,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_FOLLOWLOCATION => true
+    ));
+
+    $output = curl_exec($ch);
+    //echo $output;
+    }
 }

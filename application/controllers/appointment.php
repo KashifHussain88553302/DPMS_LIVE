@@ -34,8 +34,109 @@ class appointment extends CI_Controller
   			$Temp_appointment_status_id = 14; // 14 Approve;
   		}
   		$this->model_appointment->UpdateAppointmentStatus($appointment_id , $Temp_appointment_status_id);
+      
+      if($Temp_appointment_status_id == 14 ) // !4 Approved
+      {
+        $this->SendApprovedAppointmentNotification($appointment_id);
+      }
   	}
   }
+
+  // Function to send the notification to the user.
+  public function SendApprovedAppointmentNotification($Appointment_id)
+  {
+    if($appointment_id != 0 && $appointment_id != '')
+    {
+
+       $Details = $this->model_appointment->GetDetail($Appointment_id);
+
+    $Patient_id = '';
+    $Doctor_id = '';
+
+    $PatientName = "";
+    $AppointmentID = "";
+    $Patient_Email = "";
+    $patient_Cnic = "";
+    $Patient_phone_no = "";
+
+    $Doctor_name = "";
+    $Doctor_Discription = "";
+    $DoctorCategory = "";
+
+    foreach($Details as $Detail)
+    {
+      $Patient_id = $Detail['user_id'];
+      $Doctor_id = $Detail['doctor_id'];
+    }
+    $Patient_Details  = $this->model_user->GetPatientInfo($Patient_id);
+    $Doctor_Details  = $this->model_doctor->GetDoctorInfo($Doctor_id);
+
+    foreach($Patient_Details as $Patient_Detail)
+    {
+      $PatientName =  $Patient_Detail['user_fname'].' '.$Patient_Detail['user_lname'];
+      $AppointmentID = $Appointment_id;
+      $Patient_Email = $Patient_Detail['user_email'];
+      $patient_Cnic = $Patient_Detail['user_cnic'];
+      $Patient_phone_no = $Patient_Detail['user_ph_no'];
+    }
+
+    foreach($Doctor_Details as $Doctor_Detail)
+    {
+      $Doctor_name = $Doctor_Detail['user_fname'].' '.$Doctor_Detail['user_lname']; 
+      $Doctor_Discription = $Doctor_Detail['doctor_description'];
+      $DoctorCategory = $Doctor_Detail['user_category_name'];
+    }
+
+      $message = "
+<html>
+<head>
+<title>HTML email</title>
+</head>
+<body>
+<p>This email contains HTML Tags!</p>
+<table>
+<tr>
+<th>XXXX</th>
+<th>XXXX</th>
+</tr>
+<tr>
+<td>XXXX</td>
+<td>XXXX</td>
+</tr>
+</table>
+</body>
+</html>
+";
+      // init the resource
+      $ch = curl_init();
+
+      $postData = array(
+          'ToEmail' => 'kashifhussain0066@gmail.com',
+          'EmailSubject' => 'DPMS Official Notification',
+          'EmailBody' => 'Dear Patient! You Appointment has benn approved by respective Approved.<br>
+          <br>Please visit the doctor according to the approved Timming.
+          <br>
+          <br> 
+          '.$message
+      );
+
+
+      $URL = base_url().'EmailSending.php'; // URL to send the curl call
+
+        curl_setopt_array($ch, array(
+          CURLOPT_URL => $URL,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_POST => true,
+          CURLOPT_POSTFIELDS => $postData,
+          CURLOPT_FOLLOWLOCATION => true
+      ));
+
+      $output = curl_exec($ch);
+      //echo $output;
+    }
+
+    
+    }
 
   public function ValidateAndBookAppointment()
   {

@@ -77,5 +77,11 @@ class patients extends CI_Controller
 
     $this->load->view('user/ViewAppointment',$data);
   }
+
+  public function Patient_guideline()
+  {
+    $data[] = "";
+      $this->load->view('user/user_guideline',$data);
+  }
   
 }
