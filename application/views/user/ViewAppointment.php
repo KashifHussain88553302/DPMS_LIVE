@@ -271,7 +271,7 @@ $this->load->view('includes/header.php'); // load the header HTML
                   <td><?=$Appointment['appointment_status_name'] ?></td>
                   <td>
                   <?php
-                  if($this->session->userdata('user_type') == 1) // 1- Doctor
+                  if($this->session->userdata('user_type') == 1 && $this->session->userdata('user_id') != $Appointment['user_id']) // 1- Doctor
                   { 
                     if($Appointment['appointment_status_id'] == 14)
                     {
@@ -300,23 +300,25 @@ $this->load->view('includes/header.php'); // load the header HTML
 
 
                   }
-
-                  if($Appointment['appointment_status_id'] == 16)
-                    {
-                      ?>
-                         <a href="<?php echo base_url().'Appointment/AppointmentPrescriptionDetail/'.$Appointment['appointment_id'] ; ?>" target="_blank"  class="btn  btn-primary btn-sm">View Prescription</a>
-                         <!--<button type="button" class="btn  btn-primary btn-sm">Primary</button>-->
-                 
-                      <?php 
-                    }
-                    if($Appointment['appointment_status_id'] != 15 && $Appointment['appointment_status_id'] != 16)
-                    {
-                      ?>
-                      <button type="button" class="btn  btn-danger btn-sm" onclick="funChangeAppointmentStatus(<?=$Appointment['appointment_id']?>,<?=$Appointment['appointment_status_id'] ?> , CancelAppointment=1)">Cancel</button>
-                        <!-- <a href="javascript:void(0);"  class="">Cancel</a>-->
-                 
-                      <?php 
-                    }
+                  else
+                  {
+                    if($Appointment['appointment_status_id'] == 16)
+                      {
+                        ?>
+                           <a href="<?php echo base_url().'Appointment/AppointmentPrescriptionDetail/'.$Appointment['appointment_id'] ; ?>" target="_blank"  class="btn  btn-primary btn-sm">View Prescription</a>
+                           <!--<button type="button" class="btn  btn-primary btn-sm">Primary</button>-->
+                   
+                        <?php 
+                      }
+                      if($Appointment['appointment_status_id'] != 15 && $Appointment['appointment_status_id'] != 16)
+                      {
+                        ?>
+                        <button type="button" class="btn  btn-danger btn-sm" onclick="funChangeAppointmentStatus(<?=$Appointment['appointment_id']?>,<?=$Appointment['appointment_status_id'] ?> , CancelAppointment=1)">Cancel</button>
+                          <!-- <a href="javascript:void(0);"  class="">Cancel</a>-->
+                   
+                        <?php 
+                      }
+                  }
                   ?>
 
                   </td>

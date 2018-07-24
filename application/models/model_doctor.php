@@ -116,14 +116,14 @@ class model_doctor extends CI_Model {
 	{
 		$timedate = date('Y-m-d H:i:s');
     $FormatedDocotorDayStartTime = date('H:i:s', strtotime($DoctorDayStartTime));
-    $FormatedDocotorDayStartTime = date('H:i:s', strtotime($DoctorDayEndTime));
+    $FormatedDoctorDayEndTime = date('H:i:s', strtotime($DoctorDayEndTime));
 	    if($doctor_day_plan_id != '' && $doctor_day_plan_id != 0)
 	    {
 	    	$query  = $this->db->query(" 	
 										UPDATE tbl_doctor_day_plan
 										SET 
 										availability_time_start = '$FormatedDocotorDayStartTime' , 
-										availability_time_end = '$FormatedDocotorDayStartTime' ,
+										availability_time_end = '$FormatedDoctorDayEndTime' ,
 										Is_active = '$Temp_day_status' ,
 										doctor_day_plan_modified_date = '$timedate' 
 										WHERE doctor_day_plan_id = '$doctor_day_plan_id'
