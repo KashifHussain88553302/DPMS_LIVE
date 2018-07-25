@@ -6,6 +6,21 @@ $this->load->view('includes/header.php'); // load the header HTML
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/cssdist/css/skins/_all-skins.min.css' ?>">
+  <style>
+    .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
+
+    .example-modal .modal {
+      background: transparent !important;
+    }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -34,6 +49,37 @@ $this->load->view('includes/header.php'); // load the header HTML
 
     <!-- Main content -->
     <section class="content">
+      <?php
+if($is_firstTime == 1) 
+{
+?>
+      <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width: 160%;left: -32%;">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Dashboard</h4>
+            </div>
+            <div class="modal-body" style="height: 500px;">
+              <iframe  width="100%" height="100%" src="https://www.screencast.com/t/vyLP6mg8sq" frameborder="0" allowfullscreen ></iframe>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">continue..</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <?php
+      } 
+      ?>
+      <button style="display:none;" id="modal-default_userguide" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                Launch Default Modal
+              </button>
       <!-- Info boxes -->
       <div class="row">
       <?php 
@@ -189,6 +235,17 @@ $this->load->view('includes/footer'); // load the footer HTML
 <script src="<?php echo base_url().'assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'?>"></script>
 <script src="<?php echo base_url().'assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'?>"></script>
 <script type="text/javascript">
+<?php
+if($is_firstTime == 1) 
+{
+?>
+$(document).ready(function(){
+    $("#modal-default_userguide").trigger("click");
+});
+<?php 
+}
+?>
+
       function funcviewAppointmentDetail(Appointmentstatus,IsToday)
       {
         if(IsToday == 0)

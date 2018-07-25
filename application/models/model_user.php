@@ -138,6 +138,7 @@ class model_user extends CI_Model {
 										FROM tbl_users tu
 										WHERE tu.user_uname = '$txt_usename'
 										AND tu.user_pass = '$ecryptedPassword'
+										AND tu.user_is_active = 1
 									");
 		
 		$result = $query->result_array();			

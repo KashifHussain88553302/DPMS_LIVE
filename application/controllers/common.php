@@ -81,7 +81,7 @@ class common extends CI_Controller {
   $ch = curl_init();
 
     $postData = array(
-        'ToEmail' => 'taskeenbhinder@hotmail.be ',
+        'ToEmail' => 'kashifhussain0066@gmail.com',
         'EmailSubject' => 'DPMS Testing Email',
         'EmailBody' => 'Dear User you have been registered to <b>DPMS</b> Now open your account and proceed.'
     );
@@ -99,5 +99,21 @@ class common extends CI_Controller {
 
     $output = curl_exec($ch);
     //echo $output;
+    }
+
+    public function VarifyUserAccount()
+    {
+      $this->load->model('model_common');
+        $user_id = $this->uri->segment(3) ;
+        if($user_id != '' && $user_id != 0)
+        {
+          $this->model_common->updateisactive($user_id);
+
+        $this->session->set_flashdata('success_signup', 'You have successfully verified your account please login to continue..');
+
+
+          header('Location:'. base_url().'');
+        }
+
     }
 }

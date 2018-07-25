@@ -45,7 +45,10 @@ class appointment extends CI_Controller
   // Function to send the notification to the user.
   public function SendApprovedAppointmentNotification($Appointment_id)
   {
-    if($appointment_id != 0 && $appointment_id != '')
+    $this->load->model('model_appointment');
+    $this->load->model('model_doctor');
+    $this->load->model('model_user');
+    if($Appointment_id != 0 && $Appointment_id != '')
     {
 
        $Details = $this->model_appointment->GetDetail($Appointment_id);
@@ -62,59 +65,101 @@ class appointment extends CI_Controller
     $Doctor_name = "";
     $Doctor_Discription = "";
     $DoctorCategory = "";
+    $DoctorEmail = "";
+    $Doctor_location = "";
+    $Doctor_city="";
 
+    $AppointmentDate = "";
+    $AppointmentTime="";
+
+    $SENDINGEMAILADDRESS = "";
     foreach($Details as $Detail)
     {
       $Patient_id = $Detail['user_id'];
       $Doctor_id = $Detail['doctor_id'];
+      $AppointmentDate = $Detail['appointment_date'];
+      $AppointmentTime= $Detail['appointment_time'];
     }
+
+    $Formated_appointment_date = date('D d M, Y ', strtotime($AppointmentDate));
+
+    $Formated_appointment_Time = date('H:i A', strtotime($AppointmentTime));
+
+
     $Patient_Details  = $this->model_user->GetPatientInfo($Patient_id);
     $Doctor_Details  = $this->model_doctor->GetDoctorInfo($Doctor_id);
 
     foreach($Patient_Details as $Patient_Detail)
     {
-      $PatientName =  $Patient_Detail['user_fname'].' '.$Patient_Detail['user_lname'];
-      $AppointmentID = $Appointment_id;
-      $Patient_Email = $Patient_Detail['user_email'];
-      $patient_Cnic = $Patient_Detail['user_cnic'];
+      $PatientName    =  $Patient_Detail['user_fname'].' '.$Patient_Detail['user_lname'];
+      $AppointmentID  = $Appointment_id;
+      $Patient_Email  = $Patient_Detail['user_email'];
+      $patient_Cnic   = $Patient_Detail['user_cnic'];
       $Patient_phone_no = $Patient_Detail['user_ph_no'];
+
     }
 
     foreach($Doctor_Details as $Doctor_Detail)
     {
-      $Doctor_name = $Doctor_Detail['user_fname'].' '.$Doctor_Detail['user_lname']; 
+      $Doctor_name        = $Doctor_Detail['user_fname'].' '.$Doctor_Detail['user_lname']; 
       $Doctor_Discription = $Doctor_Detail['doctor_description'];
-      $DoctorCategory = $Doctor_Detail['user_category_name'];
+      $DoctorCategory     = $Doctor_Detail['user_category_name'];
+      $DoctorEmail        = $Doctor_Detail['user_email'];
+      $Doctor_location    = $Doctor_Detail['user_location'];
+       $Doctor_city    = $Doctor_Detail['user_city_name'];
+
     }
 
+    $SENDINGEMAILADDRESS = $Patient_Email;
+    $SENDINGEMAILADDRESS ="kashifhussain0066@gmail.com";
       $message = "
-<html>
-<head>
-<title>HTML email</title>
-</head>
-<body>
-<p>This email contains HTML Tags!</p>
-<table>
-<tr>
-<th>XXXX</th>
-<th>XXXX</th>
-</tr>
-<tr>
-<td>XXXX</td>
-<td>XXXX</td>
-</tr>
-</table>
-</body>
-</html>
-";
+                <html>
+                  <head>
+                    <title>HTML email</title>
+                  </head>
+                  <body>
+                    <table border='1'>
+                      <tr>
+                        <th colspan='3' align='center'><b>DPMS</b></th>
+                      </tr>
+                      <tr>
+                        <th colspan='3' align='center'><b>Appointment Info</b></th>
+                      </tr>
+                      <tr>
+                        <td><b>Appointment ID: </b>".$AppointmentID."</td>
+                        <td><b>Appointment Date: ".$Formated_appointment_date."</b></td>
+                        <td><b>Appointment Time: ".$Formated_appointment_Time."</b></td>
+                      </tr>
+                      <tr>
+                        <td><b>Doctor Name: </b>".$Doctor_name."</td>
+                        <td><b>City: </b>".$Doctor_city."</td>
+                        <td><b>Category: </b>".$DoctorCategory."</td>
+                      </tr>
+                      <tr>
+                        <td><b>Email: </b>".$DoctorEmail."</td>
+                        <td colspan='2'><b>Location: </b>".$Doctor_location."</td>
+                      </tr>
+                      <tr>
+                        <th colspan='3' align='center'><b>Patient Info</></th>
+                      </tr>
+                      <tr>
+                        <td><b>Patient Name: </b>".$PatientName."</td>
+                        <td><b>Email: </b>".$Patient_Email."</td>
+                        <td><b>CNIC: </b>".$patient_Cnic."</td>
+                      </tr>
+                    </table>
+                  </body>
+                </html>
+                ";
       // init the resource
       $ch = curl_init();
 
       $postData = array(
-          'ToEmail' => 'kashifhussain0066@gmail.com',
+          'ToEmail' => $SENDINGEMAILADDRESS,
           'EmailSubject' => 'DPMS Official Notification',
-          'EmailBody' => 'Dear Patient! You Appointment has benn approved by respective Approved.<br>
+          'EmailBody' => 'Dear Patient! You Appointment has been approved by respective Doctor<br>
           <br>Please visit the doctor according to the approved Timming.
+          <br> If you have any queries feel free to contact us.
           <br>
           <br> 
           '.$message

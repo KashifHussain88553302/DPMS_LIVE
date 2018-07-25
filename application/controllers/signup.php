@@ -125,7 +125,68 @@ class signup extends CI_Controller {
           $_REQUEST['txt_password'] = $txt_password;
           */
           // Set flash data 
-          $this->session->set_flashdata('success_signup', 'You have successfully signup !! login to continue.');
+          $this->session->set_flashdata('success_signup', 'You have successfully signup !! Please varify your account bu clicking on link send in the email & login to continue.');
+
+           $message = "
+                <html>
+                  <head>
+                    <title>HTML email</title>
+                  </head>
+                  <body>
+                    <table border='1'>
+                      <tr>
+                        <th colspan='3' align='center'><b>DPMS</b></th>
+                      </tr>
+                      <tr>
+                        <th colspan='3' align='center'><b>User Info</b></th>
+                      </tr>
+                      <tr>
+                        <td><b>User first name: </b>".$txt_first_name."</td>
+                        <td><b>User Last Name: ".$txt_last_name."</b></td>
+                        <td><b>User Email: ".$txt_email."</b></td>
+                      </tr>
+                      <tr>
+                        <td><b>User Name: </b>".$txt_user_name."</td>
+                        <td><b>Password: </b>".$txt_password."</td>
+                        <td><b>Phone No: </b>".$phoneNo."</td>
+                      </tr>
+                    </table>
+                  </body>
+                </html>
+                ";
+
+
+          $SENDINGEMAILADDRESS = $txt_email;
+
+          $SENDINGEMAILADDRESS = "kashifhussain0066@gmail.com";
+
+           // init the resource
+         $ch = curl_init();
+
+        $postData = array(
+            'ToEmail' => $SENDINGEMAILADDRESS,
+            'EmailSubject' => 'DPMS Official Notification',
+            'EmailBody' => 'Dear user! You have successfully signup for the DPMS<br>
+            <br>To start a new journey please varify your account by click on the link below and then login
+            <br><a href="'. base_url().'common/VarifyUserAccount/'.$LatestUserId.'"> click here to verify your account </a>
+            <br>
+            <br> 
+            '.$message
+        );
+
+
+        $URL = base_url().'EmailSending.php'; // URL to send the curl call
+
+          curl_setopt_array($ch, array(
+            CURLOPT_URL => $URL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postData,
+            CURLOPT_FOLLOWLOCATION => true
+        ));
+
+        $output = curl_exec($ch);
+        //echo $output;
           
           
           header('Location:'. base_url().'');

@@ -102,54 +102,22 @@
         <?php 
         }
         ?>
-        
-        <!--
-        <li>
-          <a href="pages/widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-       
-        
-         <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-         <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li>
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>-->
-        <li class="header">Information</li>
-        <li><a href="<?php echo base_url().'Patients/Patient_guideline';?>"><i class="fa fa-circle-o text-aqua"></i> <span>User guide</span></a></li>
+        <?php if($this->session->userdata('user_type') == 1) // 1- Doctor
+        {
+        ?>
+          <li class="header">Information</li>
+          <li><a href="<?php echo base_url().'Doctor/Patient_guideline';?>"><i class="fa fa-circle-o text-aqua"></i> <span>User guide</span></a></li>
+        <?php 
+        }
+        else if($this->session->userdata('user_type') == 2) // 1- Doctor
+        {
+        ?>
+          <li class="header">Information</li>
+          <li><a href="<?php echo base_url().'Patients/Patient_guideline';?>"><i class="fa fa-circle-o text-aqua"></i> <span>User guide</span></a></li>
+        <?php 
+        }
+        ?>
+
       </ul>
     </section>
     <!-- /.sidebar -->

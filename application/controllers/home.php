@@ -14,6 +14,8 @@ class home extends CI_Controller {
   {
   	$this->load->helper('url'); // load helper fuction
 
+      $this->load->model('model_common');
+
     if($this->session->userdata('user_id') != '' || $this->session->userdata('user_id') != 0){
       //echo "hello";
     }
@@ -21,20 +23,36 @@ class home extends CI_Controller {
     {
     }
 
+    $Tempis_firstTime = $this->model_common->is_firstTime();
+    foreach($Tempis_firstTime as $Tempis_first)
+    {
+      $is_firstTime = $Tempis_first['user_is_first_time'];
+    }
+    
+    if($is_firstTime == 1)
+    {
+       $this->model_common->updateis_firstTime();
+    } 
+    else
+    {
+      $is_firstTime = 0;
+    }
+
+    $data["is_firstTime"] = $is_firstTime;
+
     if($this->session->userdata('user_type') == 1) // 1 - Doctor
     {
       $data[] = "";
 
-      $this->load->model('model_common');
       $data["commonCounts"] = $this->model_common->getcommonInfoCounts();
       $data["commonDoctorCounts"] = $this->model_common->getcommonDoctorCounts();
+
       
       $this->load->view('Doctor/home',$data);
     }else
     {
       $data[] = "";
 
-      $this->load->model('model_common');
       $data["commonCounts"] = $this->model_common->getcommonInfoCounts();
       $data["commonPatientCounts"] = $this->model_common->getcommonpatientCounts();
       

@@ -693,8 +693,8 @@ $this->load->view('includes/header.php'); // load the header HTML
                   </td>
                   <td>
                     
-                        <input onclick="funchideshowTimepickers(<?=$doctor_day_plan_id?> , 1)" type="radio" <?php if($Is_active == 1 ) { echo 'checked=""';} ?> id="day_status_on_<?=$doctor_day_plan_id?>" value="1"  name="day_status_<?=$availability_day_no?>" > on  
-                        <input onclick="funchideshowTimepickers(<?=$doctor_day_plan_id?> , 0)" type="radio" <?php if($Is_active == 0 ) { echo 'checked=""';} ?> id="day_status_off_<?=$doctor_day_plan_id?>" value="0"  name="day_status_<?=$availability_day_no?>" > off
+                        <input onclick="funchideshowTimepickers(<?=$doctor_day_plan_id?> , 1)" type="radio" <?php if($Is_active == 1 ) { echo 'checked=""';} ?> id="day_status_on_<?=$doctor_day_plan_id?>" value="1"  name="day_status_<?=$doctor_day_plan_id?>" > on  
+                        <input onclick="funchideshowTimepickers(<?=$doctor_day_plan_id?> , 0)" type="radio" <?php if($Is_active == 0 ) { echo 'checked=""';} ?> id="day_status_off_<?=$doctor_day_plan_id?>" value="0"  name="day_status_<?=$doctor_day_plan_id?>" > off
                   </td>
                   <td>
                   <?php

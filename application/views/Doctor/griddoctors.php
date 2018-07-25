@@ -249,7 +249,7 @@ $this->load->view('includes/header.php'); // load the header HTML
 
                       <td>
                         <!--<a href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank"></a>-->
-                        <a  href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank" class="btn  btn-primary btn-sm">View Detail</a>
+                        <a  href="<?php echo base_url().'doctor/DoctorDetail/'.$doctor['user_id'];?>" target="_blank" class="btn  btn-primary btn-sm">View Detail & Book Appointment</a>
                         <?php
                           if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
                           {

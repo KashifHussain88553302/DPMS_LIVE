@@ -29,6 +29,45 @@ class model_common extends CI_Model
 		return $result;
 	}
 
+	public function is_firstTime()
+	{
+		$sessionuser_id = $this->session->userdata('user_id');
+		$query  = $this->db->query(" 	
+										SELECT *
+										FROM `tbl_users` tu 
+										WHERE 1= 1 
+										AND tu.user_id = '$sessionuser_id'
+									");
+		
+		$result = $query->result_array();			
+		return $result;
+	}
+
+	
+
+	public function updateisactive($user_id)
+	{
+		$query  = $this->db->query(" 	
+										UPDATE tbl_users
+										SET 
+										user_is_active = 1
+										WHERE user_id = '$user_id'
+									");
+		
+	}
+
+	public function updateis_firstTime()
+	{
+		$sessionuser_id = $this->session->userdata('user_id');
+		$query  = $this->db->query(" 	
+										UPDATE tbl_users
+										SET 
+										user_is_first_time = 0
+										WHERE user_id = '$sessionuser_id'
+									");
+		
+	}
+
 	public function getAllPatient()
 	{
 		$query  = $this->db->query(" 	

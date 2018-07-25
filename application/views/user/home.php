@@ -34,6 +34,38 @@ $this->load->view('includes/header.php'); // load the header HTML
 
     <!-- Main content -->
     <section class="content">
+        <?php
+if($is_firstTime == 1) 
+{
+?>
+      <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width: 160%;left: -32%;">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Dashboard</h4>
+            </div>
+            <div class="modal-body" style="height: 500px;">
+              <iframe  width="100%" height="100%" src="https://www.screencast.com/t/YvCWXY2z3a" frameborder="0" allowfullscreen ></iframe>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">continue..</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <?php
+      } 
+      ?>
+      <button style="display:none;" id="modal-default_userguide" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                Launch Default Modal
+              </button>
+      <!-- Info boxes -->
       <!-- Info boxes -->
       <div class="row">
       <?php 
@@ -173,6 +205,26 @@ $this->load->view('includes/header.php'); // load the header HTML
     }
       ?>
       <!-- /.row -->
+
+       <div class="row">
+    
+         <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3></h3>
+
+              <p>View All Doctors</p>
+            </div>
+            <div class="icon">
+              <i class="ion  ion-bag "></i>
+            </div>
+            <a  href="<?php echo base_url().'doctor/griddoctor';?>" class="small-box-footer">Click here to view all doctors and book appointment <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+       
+       
+      </div>
     </section>
     <!-- /.content -->
    </div>
@@ -189,6 +241,16 @@ $this->load->view('includes/footer'); // load the footer HTML
 <script src="<?php echo base_url().'assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'?>"></script>
 <script src="<?php echo base_url().'assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'?>"></script>
 <script type="text/javascript">
+<?php
+if($is_firstTime == 1) 
+{
+?>
+$(document).ready(function(){
+    $("#modal-default_userguide").trigger("click");
+});
+<?php 
+}
+?>
       function funcviewAppointmentDetail(Appointmentstatus,IsToday)
       {
         if(IsToday == 0)

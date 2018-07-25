@@ -198,7 +198,11 @@ class doctor extends CI_Controller {
     //echo $datepicker."<br>";
     //echo $Doctor_id."<br>";
   }
-
+  public function Patient_guideline()
+  {
+    $data[] = "";
+      $this->load->view('Doctor/user_guideline',$data);
+  }
   
 
 }
