@@ -48,7 +48,7 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <h3 class="timeline-header"><a href="#">Home</a> </h3>
 
                 <div class="timeline-body">
-                  Here you can see count of all the doctors, patients, appointments and new members.<br>
+                  Here you can see view count of all the doctors, patients, appointments and new members.<br>
                   Also you can view the count of Today appointments, Requested Appointments, Approved and Finished Appointments. You can also view the detail by clicking on the link below to get the detail of  the appointments.<br><br>
                   <img style="width:100%;height:100%;" src="<?php echo base_url().'assets/images/patient_home.png';?>">
                 </div>
@@ -66,7 +66,7 @@ $this->load->view('includes/header.php'); // load the header HTML
 
                 <div class="timeline-body">
                   Here you can view and edit your profile.
-                  You can also update your password by clicking on a link. By clicking on the link you have to give the old password along  with the new password and update.
+                  You can also update your password by clicking on a link "Change Password". By clicking on the link an allied box will open where you have to give the old password along  with the new password and click change password.
                   <br><br>
                   <img style="width:100%;height:100%;" src="<?php echo base_url().'assets/images/patient_user_profile.png';?>">
                 </div>
@@ -90,8 +90,8 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <h3 class="timeline-header"><a href="#">View Doctors</a></h3>
 
                 <div class="timeline-body">
-                    By using this interface you can all doctors register in the system. You can also filter the doctors by name category and city.<br>
-                    You can view detail of the doctor by clickin on the link.
+                    By using this interface you can view all doctors with in the system. You can also search the doctors by name category and city.<br>
+                    You can view detail of the doctor by clicking on the "View Detail & Book Appointment".
                     <br><br>
                     <img style="width:100%;height:100%;" src="<?php echo base_url().'assets/images/patient_view_doctor.png';?>">
                 </div>
@@ -107,9 +107,9 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <h3 class="timeline-header"><a href="#">Doctor Detail and Book appointment.</a></h3>
 
                 <div class="timeline-body">
-                    By using this interface you can view detail of the doctor and their time schedule.
-                    You can book appointment by clickin on the link.
-                    <br><br>
+                    By using this interface you can view detail of the specific doctor and their time schedule.
+                    You can book appointment by clicking on the link "Book Appointment".
+                    <br>
                     By clicking on the link an allied box will open where you have to give the Date  and time of  the appointment along with the deiscription.
                     <br>
                     <span style="color:red;"> Note: you cannot book appointment with the doctor if the doctor is not available at specific date and time also if the doctor has already has an appointment.</span>
@@ -158,7 +158,7 @@ $this->load->view('includes/header.php'); // load the header HTML
                 <h3 class="timeline-header"><a href="#">View priscription</a></h3>
 
                 <div class="timeline-body">
-                    By using this interface you can view the detail of medicines, diseases, vitals and priscriptions.
+                    By using this interface you can view the detail of medicines, diseases, vitals and priscriptions added by the doctor.
                     <br><br>
                     <img style="width:100%;height:100%;" src="<?php echo base_url().'assets/images/patient_view_priscription.png';?>">
                 </div>

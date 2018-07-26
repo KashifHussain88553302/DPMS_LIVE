@@ -411,7 +411,9 @@ $this->load->view('includes/header.php'); // load the header HTML
                             </div>
                         </div>
                         
-
+                        <?php
+                          if($this->session->userdata('admin_id') != '' && $this->session->userdata('admin_id') != 0)
+                          {}else{ ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group" style="text-align: center;">
@@ -422,6 +424,9 @@ $this->load->view('includes/header.php'); // load the header HTML
                                 </div>
                             </div>
                         </div>
+                        <?php
+                        } 
+                        ?>
 
                     </div>
                 </div>

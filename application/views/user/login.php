@@ -71,7 +71,7 @@
     ?>
     <form action="" method="post" id="form_login">
       <div class="form-group has-feedback">
-        <input id="txt_usename" name="txt_usename" type="text" class="form-control" value="<?php echo $this->input->post('txt_usename'); ?>" placeholder="Email">
+        <input id="txt_usename" name="txt_usename" type="text" class="form-control" value="<?php echo $this->input->post('txt_usename'); ?>" placeholder="User name">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         <span id="Error_usename" class="spanError"></span>
       </div>
@@ -135,7 +135,7 @@
     if(txt_usename == '')
     {
       
-      $("#Error_usename").html("Please enter first name");
+      $("#Error_usename").html("Please enter User name");
       $("#txt_usename").addClass( "Errorborderclass" );
       return false;
     }

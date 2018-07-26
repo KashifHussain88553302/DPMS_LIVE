@@ -2,10 +2,10 @@
 $this->load->view('includes/header.php'); // load the header HTML 
 ?>
 <link rel="stylesheet" href="<?php echo base_url().'assets/css/bower_components/jvectormap/jquery-jvectormap.css' ?>">
-<link rel="stylesheet" href="<?php echo base_url().'assets/cssdist/css/AdminLTE.min.css' ?>">
+<link rel="stylesheet" href="<?php echo base_url().'assets/css/AdminLTE.min.css' ?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url().'assets/cssdist/css/skins/_all-skins.min.css' ?>">
+  <link rel="stylesheet" href="<?php echo base_url().'assets/css/skins/_all-skins.min.css' ?>">
   <style>
     .example-modal .modal {
       position: relative;
