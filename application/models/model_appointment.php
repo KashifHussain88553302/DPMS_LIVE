@@ -216,6 +216,45 @@ class model_appointment extends CI_Model
 		return $result;
 	}
 
+	public function validatePatientAppointment()
+	{
+		$WhereCondition = "";
+
+		$AppointmentDate         = $this->input->post('AppointmentDate');
+	    $AppointmentTime         = $this->input->post('AppointmentTime');
+
+		$user_id = $this->session->userdata('user_id');
+
+
+		if($AppointmentDate != "")
+		{	
+			$Formated_AppointmentDates = date('Y-m-d', strtotime($AppointmentDate));
+
+			$WhereCondition .= "AND UDA.appointment_date = '$Formated_AppointmentDates' ";
+		}
+
+		if($AppointmentTime != "" )
+		{	
+			$Formated_AppointmentTime = date('h:i:s', strtotime($AppointmentTime));
+
+			$WhereCondition .= "AND UDA.appointment_time = '$Formated_AppointmentTime' ";
+		}
+
+		$query  = $this->db->query(" 	
+										SELECT 
+										count(*) As count
+										FROM 
+										tbl_user_doctor_appointment UDA
+										WHERE 1 = 1 
+										$WhereCondition
+										AND UDA.user_id = '$user_id'
+									");
+		
+		$result = $query->result_array();			
+		return $result;
+
+	}
+
 	public function insertNewAppointments($Doctor_id='', $AppointmentDate='' , $AppointmentTime='' , $AppointmentDescription='')
 	{
 		$user_id = $this->session->userdata('user_id');

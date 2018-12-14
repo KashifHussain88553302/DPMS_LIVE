@@ -17,20 +17,23 @@ class login extends CI_Controller {
     $txt_usename             = $this->input->post('txt_usename');
     $txt_password            = $this->input->post('txt_password');
 
-    if($this->session->userdata('user_id') != '' && $this->session->userdata('user_id') != 0){
+    // if the user already login redirect to the home page.
+    if($this->session->userdata('user_id') != '' && $this->session->userdata('user_id') != 0) 
+    {
       header('Location:'. base_url().'/home');
     }
 
+    // if the form is submitted
     if(isset($_REQUEST['btn_loginUser'])=="")
     {
     }
     else
-    {
-       if($txt_usename == "")
+    {   
+       if($txt_usename == "")// if the user name is not provided then show error message.
         {
           $data['error'] = "Invalid User Name";
         }
-        elseif($txt_password == "")
+        elseif($txt_password == "")// if the password is not provided then show error message
         {
           $data['error'] = "Invalid Password";
         }
@@ -41,14 +44,14 @@ class login extends CI_Controller {
         if($data['error'] == "")
         { 
           $user_id = 0;
-          $user_infos = $this->model_user->LoginUser(); //Call the model function to Add new user
+          $user_infos = $this->model_user->LoginUser(); // get the user info.
 
           foreach($user_infos as $user_info)
           {
             $user_id = $user_info['user_id'];
           }
 
-          if($user_id != 0 && $user_id != '')
+          if($user_id != 0 && $user_id != '') // if the user succesfully login
           {
 
             foreach($user_infos as $user_info)
@@ -75,7 +78,6 @@ class login extends CI_Controller {
               $this->session->set_userdata($user_data);
             }
 
-
             $data['success'] = "You have succesfully signup";
             header('Location:'. base_url().'home');
           }
@@ -83,20 +85,17 @@ class login extends CI_Controller {
           {
             $data['error'] = "Invalid User Name or Password";
           }
-
         }
         else
         {
-
         }
-
     }
 
   	$this->load->view('user/login', $data);
   }
 
 
-  public function signout()
+  public function signout() // function to logout any user
   {
     if(!$this->session->userdata('user_id')){
        header('Location:'. base_url().'');

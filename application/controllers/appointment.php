@@ -15,6 +15,9 @@ class appointment extends CI_Controller
   {
 
   }
+  /**
+
+  **/
   public function UpdateAppointmentStatus()
   {
   	$this->load->model('model_appointment');
@@ -183,6 +186,11 @@ class appointment extends CI_Controller
     
     }
 
+  /**
+    this Function will validate the Appointment Date and Time that the Doctor doesnot have any
+    appointment book against the date and time. If the Doctor has already booked an appointment
+    then show error message otherwise Book appointment against the date  and time.
+  **/
   public function ValidateAndBookAppointment()
   {
     $this->load->model('model_appointment');
@@ -191,47 +199,52 @@ class appointment extends CI_Controller
     $AppointmentTime         = $this->input->post('AppointmentTime');
     $AppointmentDescription  = $this->input->post('AppointmentDescription');
 
-    if($Doctor_id == "" || $Doctor_id == 0)
+    if($Doctor_id == "" || $Doctor_id == 0) // if invlalid Doctoer
     {
       echo "Invalid Doctor selected";
     }
-    else if ($AppointmentDate == "")
+    else if ($AppointmentDate == "") // if Appointment Date is invalid.
     {
-      echo "Invalid Doctor selected";
+      echo "Invalid Date selected";
     }
     else
     {
-       $IsvalidAppointment = $this->model_appointment->validateAppointmentsTiming($isGetCount=1);
+      $IsvalidAppointment = $this->model_appointment->validateAppointmentsTiming($isGetCount=1);// Validate the appointment.
 
-       if($IsvalidAppointment[0]['count'] > 0) 
+      if($IsvalidAppointment[0]['count'] > 0) 
       {
-           $IsAppointment = $this->model_appointment->GetAppointments($isGetCount=1);
+          $IsAppointment = $this->model_appointment->GetAppointments($isGetCount=1); // Check for Doctor Already book appointment.
          
-          if($IsAppointment[0]['count'] > 0)
+          if($IsAppointment[0]['count'] > 0)// if Doctor already have appointment then show error message.
           {
             echo "Appointment is already marked for this date and Time with this doctor";
           }
           else
           {
-              $LastAppointmentId = $this->model_appointment->insertNewAppointments($Doctor_id, $AppointmentDate , $AppointmentTime , $AppointmentDescription);
 
+           $IsPatientAppointment = $this->model_appointment->validatePatientAppointment(); // Check for patient already book appointment.
+            
+            if($IsPatientAppointment[0]['count'] > 0) // if patient already book and Appointment then show error message.
+            {
+
+              echo "You have already marked for this date and time please another time.";
+            }
+            else // If there is no appointment book against the doctor or the patient.
+            {
+              $LastAppointmentId = $this->model_appointment->insertNewAppointments($Doctor_id, $AppointmentDate , $AppointmentTime , $AppointmentDescription); // Book the Appointment Agaist the  doctor
 
               $this->model_appointment->AddAppointmentVitalsNew($LastAppointmentId);
               $this->model_appointment->AddAppointmentPrescriptionNew($LastAppointmentId);
-
-               echo "Success";
+              echo "Success";
+            }
           }
       }
       else
       {
         echo "Doctor is not Available at this date and Time";
       }
-
-
-      
     }
    
-    
   }
 
   public function AppointmentPrescription()

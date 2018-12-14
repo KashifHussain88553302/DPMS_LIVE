@@ -12,6 +12,9 @@ class signup extends CI_Controller {
     
    }
 
+  /**
+    This Function will validate and insert the data of the user when he register.Also and notification will be sent to the user to varify the Email address he has provided
+  **/
   public function index()
   {
 
@@ -53,7 +56,7 @@ class signup extends CI_Controller {
         elseif($txt_user_name != "")
         {
 
-          $user_id =  $this->IsUserNameAlreadyExist();
+          $user_id =  $this->IsUserNameAlreadyExist(); // Validate if the user email already exist.
 
           if($user_id == 0)
           {}
@@ -99,10 +102,6 @@ class signup extends CI_Controller {
         {
           $data['error'] = "Password not match";
         }
-        /*elseif($txt_ph_no == "")
-        {
-          $data['error'] = "Please provide phone no.";
-        }*/
         else{}
         if($data['error'] == "")
         {
@@ -119,11 +118,6 @@ class signup extends CI_Controller {
           }
           $data['success'] == "You have succesfully signup";
           
-          /*
-          $_REQUEST['btn_loginUser'] = "btn_loginUser";
-          $_REQUEST['txt_usename'] = $txt_user_name;
-          $_REQUEST['txt_password'] = $txt_password;
-          */
           // Set flash data 
           $this->session->set_flashdata('success_signup', 'You have successfully signup !! Please varify your account bu clicking on link send in the email & login to continue.');
 
@@ -176,7 +170,7 @@ class signup extends CI_Controller {
 
 
         $URL = base_url().'EmailSending.php'; // URL to send the curl call
-
+        // Send to curl call to end the email.
           curl_setopt_array($ch, array(
             CURLOPT_URL => $URL,
             CURLOPT_RETURNTRANSFER => true,
